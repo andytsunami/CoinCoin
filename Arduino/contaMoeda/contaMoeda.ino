@@ -7,6 +7,7 @@
 #define ATIVO 0
 
 int posicao = 0;
+float saldo = 0.0;
 
 void setup() {
   Serial.begin(9600);
@@ -25,32 +26,57 @@ void loop() {
   
 
   if(digitalRead(AMARELO) == ATIVO) {
-    posicao = posicao < AMARELO ? AMARELO : posicao;
-    Serial.print("Posicao ");
-    Serial.println(posicao);
+    guardaValor(AMARELO);
   } else if(digitalRead(VERMELHO) == ATIVO) {
-    posicao = posicao < VERMELHO ? VERMELHO : posicao;
-    Serial.print("Posicao ");
-    Serial.println(posicao);
+    guardaValor(VERMELHO);
   }else if(digitalRead(LARANJA) == ATIVO) {
-    posicao = posicao < LARANJA ? LARANJA : posicao;
-    Serial.print("Posicao ");
-    Serial.println(posicao);
+    guardaValor(LARANJA);
   }else if(digitalRead(VERDE) == ATIVO) {
-    posicao = posicao < VERDE ? VERDE : posicao;
-    Serial.print("Posicao ");
-    Serial.println(posicao);
+    guardaValor(VERDE);
   }else if(digitalRead(AZUL) == ATIVO) {
-    posicao = posicao < AZUL ? AZUL : posicao;
-    Serial.print("Posicao ");
-    Serial.println(posicao);
+    guardaValor(AZUL);
   }else if(digitalRead(BRANCO) == ATIVO) {
-   if(posicao > 0) {
-    Serial.print("Valor da Moeda R$ ");
-    Serial.println(posicao);
-    posicao = 0;
-   }
+    confirmaValor();
   }
 
   delay(100);
 }
+
+void guardaValor(int valor) {
+    posicao = posicao < valor ? valor : posicao;
+}
+
+void confirmaValor(){
+  if(posicao > 0) {
+    pegaValor();
+    posicao = 0;
+   }
+}
+
+void pegaValor(){
+  Serial.print("Valor da moeda: R$ ");
+  switch(posicao) {
+    case AMARELO : Serial.println("0.10");
+    saldo += 0.10;
+    break;
+    case VERMELHO : Serial.println("0.05");
+    saldo += 0.05;
+    break;
+    case LARANJA : Serial.println("0.50");
+    saldo += 0.50;
+    break;
+    case VERDE : Serial.println("0.25");
+    saldo += 0.25;
+    break;
+    case AZUL : Serial.println("1.00");
+    saldo ++;
+    break;
+  }
+
+  Serial.print("Quantidade total: R$" );
+  Serial.println(saldo);
+  
+}
+
+
+

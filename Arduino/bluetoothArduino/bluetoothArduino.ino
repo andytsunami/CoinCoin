@@ -25,7 +25,7 @@ void loop()
       command += (char)MinhaSerial.read();
     }
     Serial.println(command);
-    MinhaSerial.println("Voce digitou " + command);
+    //MinhaSerial.println("Voce digitou " + command);
     if(command == "s"){
       
       MinhaSerial.write("Seu saldo é de: R$");

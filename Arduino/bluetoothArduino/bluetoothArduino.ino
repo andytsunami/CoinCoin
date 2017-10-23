@@ -27,14 +27,17 @@ void loop()
     Serial.println(command);
     //MinhaSerial.println("Voce digitou " + command);
     if(command == "s"){
-      
+      Serial.println("App tem que receber algo...");
       MinhaSerial.write("Seu saldo é de: R$");
       MinhaSerial.println(valor);
      
     } else if (command == "l") {
        MinhaSerial.println("Valor está zerado e cofre pode ser aberto");
        valor = 0.0;
-    }
+    } else {
+      Serial.println("Nao entendi...");
+      MinhaSerial.println("Naao entendi o comando");
+      }
     
     command = "";
   }
@@ -47,4 +50,3 @@ delay(1000);
     MinhaSerial.println("Faustop");
   }*/
 }
-

@@ -23,6 +23,8 @@ var app = {
         $('#toggle-connection').click(app.toggleConnection);
         $('#clear-data').click(app.clearData);
         $('#terminal form').submit(app.sendData);
+        $("#saldo").click(app.saldo);
+        $("#zerar").click(app.zerar);
 
         $('#terminal .go-back').click(function () {
             app.goTo('paired-devices');
@@ -134,6 +136,20 @@ var app = {
 
         app.displayInTerminal(data, false);
 
+        bluetoothSerial.write(data, null, app.showError);
+    },
+
+    saldo: function (event) {
+        event.preventDefault();      
+        var data = 's';
+        app.displayInTerminal(data, false);
+        bluetoothSerial.write(data, null, app.showError);
+    },
+
+    zerar: function (event) {
+        event.preventDefault();
+        var data = 'l';
+        app.displayInTerminal(data, false);
         bluetoothSerial.write(data, null, app.showError);
     },
 

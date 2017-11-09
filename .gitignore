@@ -1,5 +1,8 @@
 # Mac
 .DS_Store
+*/android/.gradle*
+*.bin
+*.lock
 
 # iOS
 CoinCoin/platforms/ios/build/

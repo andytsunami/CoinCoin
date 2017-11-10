@@ -3,7 +3,7 @@
 #include <SoftwareSerial.h>
 
 //Define os pinos para a serial  (RX, TX)
-SoftwareSerial MinhaSerial(6, 7);
+SoftwareSerial MinhaSerial(50, 51);
 String command = "";
 
 

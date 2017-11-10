@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/vasconcelos/workspace/CoinCoin/CoinCoin/coincoinapp/platforms/android/build/intermediates/exploded-aar/android/CordovaLib/unspecified/debug/classes.jar"
+        jumboMode="false"
+        revision="27.0.1"
+        sha1="2700916c39b71c87860a54a7f5c5b98567b52bef">
+        <dex dex="/home/vasconcelos/workspace/CoinCoin/CoinCoin/coincoinapp/platforms/android/build/intermediates/pre-dexed/debug/classes-763b1821753b7eb0c9559e98fb18bbeafbbce83b.jar" />
+    </item>
+
+</items>

@@ -9,6 +9,9 @@
     "installed_plugins": {
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "br.com.remembr.coincoinapp"
+        },
+        "cordova-plugin-bluetooth-serial": {
+            "PACKAGE_NAME": "br.com.remembr.coincoinapp"
         }
     },
     "dependent_plugins": {}

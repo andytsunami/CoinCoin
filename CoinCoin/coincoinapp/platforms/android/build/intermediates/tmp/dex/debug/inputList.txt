@@ -1,2 +1,2 @@
-/home/vasconcelos/workspace/CoinCoin/CoinCoin/coincoinapp/platforms/android/build/intermediates/classes/debug
-/home/vasconcelos/workspace/CoinCoin/CoinCoin/coincoinapp/platforms/android/build/intermediates/pre-dexed/debug/classes-763b1821753b7eb0c9559e98fb18bbeafbbce83b.jar
+/Users/vasconcelos/workspace/CoinCoin/CoinCoin/coincoinapp/platforms/android/build/intermediates/classes/debug
+/Users/vasconcelos/workspace/CoinCoin/CoinCoin/coincoinapp/platforms/android/build/intermediates/pre-dexed/debug/classes-c692d5adab4b069fa383a5bcadf1db267a4ccf6f.jar

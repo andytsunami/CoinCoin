@@ -810,3 +810,7 @@ border-radius: 100px;
     top: -30px;
     right: 0;
 }
+
+.hide{
+  display: none;
+}

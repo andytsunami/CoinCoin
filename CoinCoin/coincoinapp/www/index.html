@@ -38,10 +38,9 @@
     -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
     
-    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
     <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script>
 		$('document').ready(function(){
 			$gif = $('#porcoGif').first();
@@ -63,7 +62,7 @@
             	<div style="vertical-align: middle;">                       
                     <center><img src="img/logo.png" style="width: 100%; max-width: 350px; margin-bottom: 50px;" /></center>
                     
-                   <center><a href="#instrucao1" style="text-decoration: none"><p class="cor-btn btn-comecar">Começar</p></a></center>
+                   <center><a href="#instrucao1" style="text-decoration: none"><p class="cor-btn btn-comecar" id="comecar">Começar</p></a></center>
             	</div>  
         	</div>
 		</div><!--/inicio-->
@@ -78,11 +77,11 @@
                     </ul>
                 </center>
                 <div class="box" style="font-size: 18px;">
-                    <p>Para começar, ligue seu cofrinho e conecte-se via Bluetooth!</p>
+                    <p id="dica">Para começar, ligue seu cofrinho e conecte-se via Bluetooth!</p>
                     
                     <center><img src="img/bluetooth.png" /></center>
                 </div>                
-                <center><a href="#instrucao2" style="text-decoration: none"><p class="cor-btn btn-comecar">Próximo</p></a></center>
+                <center><a href="#instrucao2" style="text-decoration: none"><p class="cor-btn btn-comecar hide" id="segue">Próximo</p></a></center>
         	</div><!--/content-app-->
 		</div><!--/intrucao1-->
         
@@ -181,13 +180,13 @@
             <div class="content-app">
                 <center>
                     <div class="visor-cofre">
-                        <span style="font-size: 20px;"><img src="img/coin.png" style="vertical-align:bottom; margin-right: 10px;" /> R$ 100,00</span>
+                        <span style="font-size: 20px;" id="saldo"><img src="img/coin.png" style="vertical-align:bottom; margin-right: 10px;" /> R$ 100,00</span>
                     </div>
                 </center>
                         
                 <center>
                     <img src="img/pig.gif" alt="" width="300" id="porcoGif"/>
-                    <button class="" id="gif-trigger">Inserir Moeda</button>   
+                    <!--button class="" id="gif-trigger">Inserir Moeda</button -->   
                 </center>
                 <!--<div class="progressBar">
                     <div class="progressBarContainer">
@@ -519,14 +518,10 @@
         
 	</div><!--/body-->
     
-    
+    <script type="text/javascript" src="cordova.js"></script>
 	<script src="js/jquery-2.1.4.min.js"></script>
-	<script src="js/jquery.mobile-1.4.5.min.js"></script>
-    <!--<script type="text/javascript" src="cordova.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-        app.initialize();
-    </script>-->
 </body>
 
 </html>

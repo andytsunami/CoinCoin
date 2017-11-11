@@ -113,7 +113,7 @@ void pegaValor(){
 
   Serial.print("Quantidade total: R$" );
   Serial.println(saldo);
-  MinhaSerial.write("Seu saldo é de: R$");
+  MinhaSerial.write("s|");
   MinhaSerial.println(saldo);
   
 }

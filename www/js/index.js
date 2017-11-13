@@ -4,7 +4,7 @@
  */
 
 'use strict';
-
+var db = null;
 var app = {
 
     initialize: function () {
@@ -12,16 +12,10 @@ var app = {
     },
 
     onDeviceReady: function () {
-       // app.goTo('paired-devices');
-
-        /*bluetoothSerial.isEnabled(app.listPairedDevices, function () {
-            app.showError('Enable bluetooth')
-        });*/
-
-      /*  bluetoothSerial.isEnabled(app.conecta, function () {
-            app.showError('Enable bluetooth')
-        });*/
-
+        
+        db = window.sqlitePlugin.openDatabase({name: 'coincoin.db', location: 'default'});
+        app.geraBanco();
+        app.listaUsuario();
 
 
         $('#comecar').click(app.conecta);
@@ -243,8 +237,39 @@ var app = {
             );
 
         }, app.showError);
-    }
+    },
 
+    geraBanco: function(){
+        alert("Gerando banco");
+        db.transaction(function(tx) {
+            tx.executeSql('CREATE TABLE IF NOT EXISTS usuario (name, valor)');
+            tx.executeSql('INSERT INTO usuario VALUES (?,?)', ['Papai', 101]);
+            tx.executeSql('INSERT INTO usuario VALUES (?,?)', ['Mamae', 202]);
+          }, function(error) {
+            app.showError('Transaction ERROR: ' + error.message);
+          }, function() {
+            app.showError('Populated database OK');
+          });
+    },
+
+    listaUsuario: function(){
+        alert("Listando usuario");
+        var nomes;
+        db.transaction(function(tx) {
+            tx.executeSql('SELECT count(*) AS users FROM usuario', [], function(tx, rs) {
+              alert('Quantidade de registros: ' + rs.rows.item(0).users);
+
+              for(var i = 0; i < rs.rows.length; i++){
+                nomes += + "Nome: " + rs.rows.item(i).name + " Valor: " + rs.rows.item(i).valor + "<br/>";
+              }
+
+              alert(nomes);
+
+            }, function(tx, error) {
+              app.showError('SELECT error: ' + error.message);
+            });
+          });
+    }, 
 };
 
 app.initialize();

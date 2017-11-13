@@ -16,5 +16,13 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-sqlite-storage": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-sqlite-storage@~2.1.2"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

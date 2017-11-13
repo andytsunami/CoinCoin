@@ -24,4 +24,5 @@
         <allow-intent href="itms-apps:*" />
     </platform>
     <plugin name="cordova-plugin-bluetooth-serial" spec="https://github.com/don/BluetoothSerial#0.4.5" />
+    <plugin name="cordova-sqlite-storage" spec="~2.1.2" />
 </widget>

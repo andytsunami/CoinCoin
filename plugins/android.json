@@ -12,6 +12,9 @@
         },
         "cordova-plugin-bluetooth-serial": {
             "PACKAGE_NAME": "br.com.remembr.coincoinapp"
+        },
+        "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "br.com.remembr.coincoinapp"
         }
     },
     "dependent_plugins": {}

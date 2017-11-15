@@ -257,8 +257,8 @@ var app = {
         alert("Listando usuario");
         var nomes;
         db.transaction(function(tx) {
-            tx.executeSql('SELECT count(*) AS users FROM usuario', [], function(tx, rs) {
-              alert('Quantidade de registros: ' + rs.rows.item(0).users);
+            tx.executeSql('SELECT * AS users FROM usuario', [], function(tx, rs) {
+              //alert('Quantidade de registros: ' + rs.rows.item(0).users);
 
               for(var i = 0; i < rs.rows.length; i++){
                 nomes += + "Nome: " + rs.rows.item(i).name + " Valor: " + rs.rows.item(i).valor + "<br/>";

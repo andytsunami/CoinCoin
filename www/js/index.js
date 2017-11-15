@@ -16,10 +16,11 @@ var app = {
         db = window.sqlitePlugin.openDatabase({name: 'coincoin.db', location: 'default'});
         app.geraBanco();
         app.listaUsuario();
+        app.conecta();
 
 
-        $('#comecar').click(app.conecta);
-       // $('#xablau').click(app.saldo);
+       // $('#comecar').click(app.conecta);
+        $('#segue').click(app.saldo);
         $('#refresh-paired-devices').click(app.listPairedDevices);
         $('#paired-devices form').submit(app.selectDevice);
         $('#toggle-connection').click(app.toggleConnection);
@@ -126,7 +127,6 @@ var app = {
     handleData: function (data) {
 
         if(data.split("|")[0] == "s"){
-            alert("sss");
             app.atualizaSaldo(data.split("|")[1]);
         }
         
@@ -148,7 +148,6 @@ var app = {
     },
 
     saldo: function(){
-        app.showError("Muito bom!");
         var data = 's';
         bluetoothSerial.write(data, null, app.showError);
     },
@@ -162,11 +161,9 @@ var app = {
 
     atualizaSaldo: function(saldo){
         if(saldo != "" || saldo != undefined){
-            alert("Deu certo " + saldo);
             $("#saldo").text("R$ " + saldo);
             $('#porcoGif').attr("src",$('#porcoGif').attr("src"));
         } else {
-            alert("Deu ruim " + saldo);
             app.saldo();
         }
         
@@ -200,8 +197,8 @@ var app = {
     showError: function (error) {
         alert(error);
     },
-    conecta: function() {
-        event.preventDefault();
+    conecta: function(event) {
+       // event.preventDefault();
         bluetoothSerial.list(function (devices) {
             var $list = $('#dica');
             var $endereco;
@@ -216,9 +213,6 @@ var app = {
             devices.forEach(function (device) {
                 if(device.address == "98:D3:32:20:EB:63"){
                     $endereco = device.address;
-                    app.showError("Cofrinho encontrado " + device.name);
-                   
-
                 }
                 
                 $list.append('Nome: ' + device.name + "<br />" + "Endereço: " + device.address);

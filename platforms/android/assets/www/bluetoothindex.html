@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport"
+          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+    <link rel="stylesheet" type="text/css" href="lib/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/bluetooth.css">
+
+    <title>Cordova Bluetooth Terminal</title>
+
+</head>
+<body>
+
+<div id="paired-devices" class="state">
+
+    <div class="headline">
+        Paired devices
+        <button id="refresh-paired-devices">Refresh</button>
+    </div>
+
+    <form>
+        <div class="list"></div>
+        <input type="submit" name="connect" value="Connect">
+    </form>
+
+</div>
+
+<div id="terminal" class="state">
+
+    <div id="selected-device">
+        <button class="go-back">Back</button>
+
+        <span class="name"></span>
+        <span class="address"></span>
+        <span class="status"></span>
+
+        <button id="toggle-connection"></button>
+    </div>
+
+    <div>
+        <label><input type="checkbox" name="autoscroll" value="1" checked> Auto scroll</label>
+        <button id="clear-data">Clear</button>
+    </div>
+
+    <div id="data"></div>
+<!--
+    <form>
+        <input type="text" name="data">
+        <input type="submit" name="send" value="Send">
+    </form>
+-->
+    <button id="saldo">Saldo</button>
+    <button id="zerar">Zerar</button>
+
+</div>
+
+<script>
+    var db = null;
+
+    document.addEventListener('deviceready', function() {
+        db = window.sqlitePlugin.openDatabase({name: 'demo.db', location: 'default'});
+    });
+
+</script>
+
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="lib/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="lib/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="js/bluetooth.js"></script>
+
+</body>
+</html>

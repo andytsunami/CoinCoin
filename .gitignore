@@ -6,6 +6,8 @@
 */.gradle*
 **/.gradle/**/*
 */*.lock
+/platforms
+*/platforms
 
 # iOS
 /platforms/ios/build/

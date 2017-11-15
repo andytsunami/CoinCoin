@@ -19,6 +19,7 @@ var app = {
 
 
         $('#comecar').click(app.conecta);
+       // $('#xablau').click(app.saldo);
         $('#refresh-paired-devices').click(app.listPairedDevices);
         $('#paired-devices form').submit(app.selectDevice);
         $('#toggle-connection').click(app.toggleConnection);
@@ -145,10 +146,8 @@ var app = {
         bluetoothSerial.write(data, null, app.showError);
     },
 
-    saldo: function (event) {
-        event.preventDefault();      
+    saldo: function(){
         var data = 's';
-        app.displayInTerminal(data, false);
         bluetoothSerial.write(data, null, app.showError);
     },
 
@@ -233,10 +232,12 @@ var app = {
     
                     app.connect($endereco);
                     $("#segue").removeClass("hide");
-                }
+                    app.saldo();
+                    
+                },
             );
-
         }, app.showError);
+        
     },
 
     geraBanco: function(){

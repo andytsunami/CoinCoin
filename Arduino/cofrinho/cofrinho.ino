@@ -49,7 +49,7 @@ void loop() {
     //MinhaSerial.println("Voce digitou " + command);
     if(command == "s"){
       Serial.println("App tem que receber algo...");
-      MinhaSerial.write("Seu saldo é de: R$");
+      MinhaSerial.write("s|");
       MinhaSerial.println(saldo);
      
     } else if (command == "l") {

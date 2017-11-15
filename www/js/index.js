@@ -126,6 +126,7 @@ var app = {
     handleData: function (data) {
 
         if(data.split("|")[0] == "s"){
+            alert("sss");
             app.atualizaSaldo(data.split("|")[1]);
         }
         
@@ -147,6 +148,7 @@ var app = {
     },
 
     saldo: function(){
+        app.showError("Muito bom!");
         var data = 's';
         bluetoothSerial.write(data, null, app.showError);
     },
@@ -159,8 +161,15 @@ var app = {
     },
 
     atualizaSaldo: function(saldo){
-        $("#saldo").text("R$ " + saldo);
-        $('#porcoGif').attr("src",$('#porcoGif').attr("src"));
+        if(saldo != "" || saldo != undefined){
+            alert("Deu certo " + saldo);
+            $("#saldo").text("R$ " + saldo);
+            $('#porcoGif').attr("src",$('#porcoGif').attr("src"));
+        } else {
+            alert("Deu ruim " + saldo);
+            app.saldo();
+        }
+        
     },
     displayInTerminal: function (data, isIncoming) {
         var $dataContainer = $('#data');
@@ -192,6 +201,7 @@ var app = {
         alert(error);
     },
     conecta: function() {
+        event.preventDefault();
         bluetoothSerial.list(function (devices) {
             var $list = $('#dica');
             var $endereco;
@@ -231,9 +241,8 @@ var app = {
                     }
     
                     app.connect($endereco);
-                    $("#segue").removeClass("hide");
-                    app.saldo();
-                    
+                        app.saldo();
+                        $("#segue").removeClass("hide");
                 },
             );
         }, app.showError);
@@ -255,13 +264,13 @@ var app = {
 
     listaUsuario: function(){
         alert("Listando usuario");
-        var nomes;
+        var nomes = "";
         db.transaction(function(tx) {
-            tx.executeSql('SELECT * AS users FROM usuario', [], function(tx, rs) {
+            tx.executeSql('SELECT * FROM usuario', [], function(tx, rs) {
               //alert('Quantidade de registros: ' + rs.rows.item(0).users);
 
               for(var i = 0; i < rs.rows.length; i++){
-                nomes += + "Nome: " + rs.rows.item(i).name + " Valor: " + rs.rows.item(i).valor + "<br/>";
+                nomes += "Nome: " + rs.rows.item(i).name + " Valor: " + rs.rows.item(i).valor + "\n";
               }
 
               alert(nomes);

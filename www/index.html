@@ -121,30 +121,7 @@
                     <!--<div style="background: #6699CC; box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.1); color: white; font-size: 18px; padding: 15px 25px;">-->
                     <center>
                         <form class="cadastro">
-                            <!--<div class="input-grupo">
-                                <span class="input-group-addon"><i class="fa fa-child fa-fw"></i></span>
-                                <input class="form-control" id="nome_da_crianca" type="text" placeholder="Nome da criança"> 
-                            </div>
-                 
-                            <br/>
-                                        
-                            <div class="input-grupo">
-                                <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                                <input class="form-control" id="nome_do_responsavel" type="text" placeholder="Nome do Responsável"> 
-                            </div>
-                                        
-                            <br/>
-                                        
-                            <div class="input-grupo">
-                                <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
-                                <input class="form-control" id="email_do_responsavel" type="email" placeholder="E-mail do Responsável"> 
-                            </div>
-                            
-                            <div class="input-grupo">
-                                <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                                <input class="form-control" id="senha_do_responsavel" type="password" placeholder="Senha">
-                            </div>-->
-                                      
+                                                                
                             <input class="form-control" id="nome_da_crianca" type="text" placeholder="Nome da criança"> 
                             
                             <input class="form-control" id="nome_do_responsavel" type="text" placeholder="Nome do Responsável"> 
@@ -154,7 +131,7 @@
                             <input class="form-control" id="senha_do_responsavel" type="password" placeholder="Senha">                                      
                             
                             <!--<button onclick="myFunction()" class="cor-btn">Xablau</button>-->
-                            <center><a href="#painel-crianca" style="text-decoration: none"><p id="xablau" class="cor-btn btn-comecar">xablau</p></a></center>
+                            <center><a href="#painel-crianca" style="text-decoration: none"><p id="cadastrar" class="cor-btn btn-comecar">Cadastrar</p></a></center>
                         </form>
                     </center>
                     <p id="nome" style="font-size: 20px;"></p>
@@ -168,7 +145,7 @@
             	<table width="100%">
                 	<tr>
                			<td>
-                    		<h2>Daniel Donato</h2>
+                    		<h2 id="nomeCrianca"></h2>
                         	<p><img src="img/trofeu.png" /> Metas ( 1 )</p>
                         </td>
                         <td>
@@ -259,7 +236,7 @@
             	<table width="100%">
                 	<tr>
                			<td>
-                    		<h2>Responsável do Daniel</h2>
+                    		<h2 id="responsavelCrianca"></h2>
                         	<p><img src="img/trofeu.png" /> Metas ( 1 )</p>
                         </td>
                         <td>

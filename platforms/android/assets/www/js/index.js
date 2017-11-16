@@ -15,8 +15,9 @@ var app = {
         
         db = window.sqlitePlugin.openDatabase({name: 'coincoin.db', location: 'default'});
         app.geraBanco();
-        app.listaUsuario();
+        //app.listaUsuario();
         app.conecta();
+        app.atualizarForms();
 
 
        // $('#comecar').click(app.conecta);
@@ -28,6 +29,7 @@ var app = {
         $('#terminal form').submit(app.sendData);
         $("#saldo").click(app.saldo);
         $("#zerar").click(app.zerar);
+        $("#cadastrar").click(app.cadastrar);
 
         $('#terminal .go-back').click(function () {
             app.goTo('paired-devices');
@@ -244,20 +246,19 @@ var app = {
     },
 
     geraBanco: function(){
-        alert("Gerando banco");
         db.transaction(function(tx) {
-            tx.executeSql('CREATE TABLE IF NOT EXISTS usuario (name, valor)');
-            tx.executeSql('INSERT INTO usuario VALUES (?,?)', ['Papai', 101]);
-            tx.executeSql('INSERT INTO usuario VALUES (?,?)', ['Mamae', 202]);
+            tx.executeSql('DROP TABLE cadastros');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS cadastros (nomeCrianca, nomeResponsavel, email, senha)');
+            //tx.executeSql('INSERT INTO usuario VALUES (?,?)', ['Papai', 101]);
+            //tx.executeSql('INSERT INTO usuario VALUES (?,?)', ['Mamae', 202]);
           }, function(error) {
             app.showError('Transaction ERROR: ' + error.message);
           }, function() {
-            app.showError('Populated database OK');
+          //  app.showError('Populated database OK');
           });
     },
 
     listaUsuario: function(){
-        alert("Listando usuario");
         var nomes = "";
         db.transaction(function(tx) {
             tx.executeSql('SELECT * FROM usuario', [], function(tx, rs) {
@@ -267,13 +268,42 @@ var app = {
                 nomes += "Nome: " + rs.rows.item(i).name + " Valor: " + rs.rows.item(i).valor + "\n";
               }
 
-              alert(nomes);
-
             }, function(tx, error) {
               app.showError('SELECT error: ' + error.message);
             });
           });
     }, 
+
+    cadastrar: function(){
+        var nomeCrianca = $("#nome_da_crianca").val();
+        var nomeResponsavel = $("#nome_do_responsavel").val();
+        var email = $("#email_do_responsavel").val();
+        var senha = $("#senha_do_responsavel").val();
+
+        db.transaction(function(tx) {
+            tx.executeSql('INSERT INTO cadastros VALUES (?,?,?,?)',[nomeCrianca,nomeResponsavel,email, senha]);
+          }, function(error) {
+            app.showError('Erro ao cadastrar: ' + error.message);
+          }, function() {
+            app.showError('Cadastro realizado com sucesso!');
+          });
+       
+          app.atualizarForms();
+    }, 
+    atualizarForms: function(){
+        db.transaction(function(tx){
+            tx.executeSql("select * from cadastros",[],function(tx,rs){
+              
+                  $("#nomeCrianca").text(rs.rows.item(0).nomeCrianca);
+                  $("#responsavelCrianca").text(rs.rows.item(0).nomeResponsavel);
+
+                  $("#nome_da_crianca").val(rs.rows.item(0).nomeCrianca);
+                  $("#nome_do_responsavel").val(rs.rows.item(0).nomeResponsavel);
+                  $("#email_do_responsavel").val(rs.rows.item(0).email);
+                  $("#senha_do_responsavel").val(rs.rows.item(0).senha);
+            });
+        });
+    }
 };
 
 app.initialize();

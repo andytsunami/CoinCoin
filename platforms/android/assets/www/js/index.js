@@ -18,10 +18,14 @@ var app = {
         //app.listaUsuario();
         app.conecta();
         app.atualizarForms();
+        
 
 
        // $('#comecar').click(app.conecta);
-        $('#segue').click(app.saldo);
+        $('#segue').click(function(){
+            app.saldo();
+            app.inicia();
+        });
         $('#refresh-paired-devices').click(app.listPairedDevices);
         $('#paired-devices form').submit(app.selectDevice);
         $('#toggle-connection').click(app.toggleConnection);
@@ -34,6 +38,7 @@ var app = {
         $('#terminal .go-back').click(function () {
             app.goTo('paired-devices');
         });
+
     },
 
   
@@ -242,19 +247,18 @@ var app = {
                 },
             );
         }, app.showError);
-        
     },
 
     geraBanco: function(){
         db.transaction(function(tx) {
-            tx.executeSql('DROP TABLE cadastros');
+        //    tx.executeSql('DROP TABLE cadastros');
             tx.executeSql('CREATE TABLE IF NOT EXISTS cadastros (nomeCrianca, nomeResponsavel, email, senha)');
             //tx.executeSql('INSERT INTO usuario VALUES (?,?)', ['Papai', 101]);
             //tx.executeSql('INSERT INTO usuario VALUES (?,?)', ['Mamae', 202]);
           }, function(error) {
             app.showError('Transaction ERROR: ' + error.message);
           }, function() {
-          //  app.showError('Populated database OK');
+                
           });
     },
 
@@ -303,7 +307,21 @@ var app = {
                   $("#senha_do_responsavel").val(rs.rows.item(0).senha);
             });
         });
+    },
+    vaPara: function(painel){
+        //alert("Pulando para " + painel);
+        $("#"+painel).click();
+    },
+    inicia: function(){
+        db.transaction(function(tx){
+            tx.executeSql("select count(*) as quant from cadastros",[], function(tx,rs){
+                if(rs.rows.item(0).quant > 0){
+                    app.vaPara("paraResponsavel");
+                }
+            });
+        });
     }
+    
 };
 
 app.initialize();

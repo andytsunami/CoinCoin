@@ -53,9 +53,26 @@
     <title>Coin Coin</title>
 </head>
 
-<body> 
-    
+<body>
+	<center><label class="trigger" for="popup__1">Click me!</label></center>
+             	
     <div class="body">
+    	
+        <section>
+            <input type="checkbox" id="popup__1" class="popup__check" />
+            <div class="popup__base">
+                <label for="popup__1" class="popup__bg"></label>
+                <div class="popup__inner">
+                    <div class="popup__calign">
+                        <label for="popup__1" class="popup__close" style="font-size: 40px;">+</label>
+                    </div>
+                    <div class="popup__textbox">
+                        <h1 style="color: #333;">Lorem Ipsum</h1>
+                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     
 		<div data-role="page" id="inicio">
         	<div class="app-panel app-panel--one" style="background: url(img/bg1.png); background-size: cover; background-position: bottom;">
@@ -240,11 +257,10 @@
                         <form class="validacao-responsavel">
                             <input class="form-control" id="senha_do_responsavel" type="password" placeholder="Senha">                                      
                             <!--<button class="cor-btn">Xablau</button>-->
-                            <center><a href="#painel-responsavel" style="text-decoration: none"><p id="cadastrar" class="cor-btn btn-comecar">Entrar</p></a></center>
+                            <center><a href="#painel-responsavel" style="text-decoration: none"><p id="cadastrar" style="margin: 20px 0 10px 0;" class="cor-btn btn-comecar">Entrar</p></a></center>             
                         </form>
+                        <a href="#painel-crianca" style="text-decoration: none; color: rgba(153,153,153,1);"><p style="margin: 20px 0; padding:0"> &larr; Voltar </p></a>
                     </center>
-                    <p id="nome" style="font-size: 20px;"></p>
-                    <br/>
                 </div>
             </div><!--/content-app-->
         </div>

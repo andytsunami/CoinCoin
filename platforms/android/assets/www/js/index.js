@@ -25,6 +25,7 @@ var app = {
         $('#segue').click(function(){
             app.saldo();
             app.inicia();
+            app.showError("Teste de modal");
         });
         $('#refresh-paired-devices').click(app.listPairedDevices);
         $('#paired-devices form').submit(app.selectDevice);
@@ -202,7 +203,11 @@ var app = {
     },
 
     showError: function (error) {
-        alert(error);
+        
+        $("#modal_titulo").text("Erro");
+        $("#modal_corpo").text(error);
+        $(".trigger").click();
+        //alert(error);
     },
     conecta: function(event) {
        // event.preventDefault();

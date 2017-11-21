@@ -927,4 +927,9 @@ border-radius: 100px;
 	cursor: pointer;
 	color: #b43d54;
 }
+
+#modal_trigger{
+  display: none;
+}
+
 /**  /POPUP***/

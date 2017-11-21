@@ -54,21 +54,21 @@
 </head>
 
 <body>
-	<center><label class="trigger" for="popup__1">Click me!</label></center>
+	<center id="modal_trigger"><label class="trigger" for="modal">Click me!</label></center>
              	
     <div class="body">
     	
         <section>
-            <input type="checkbox" id="popup__1" class="popup__check" />
+            <input type="checkbox" id="modal" class="popup__check" />
             <div class="popup__base">
-                <label for="popup__1" class="popup__bg"></label>
+                <label for="modal" class="popup__bg"></label>
                 <div class="popup__inner">
                     <div class="popup__calign">
-                        <label for="popup__1" class="popup__close" style="font-size: 40px;">+</label>
+                        <label for="modal" class="popup__close" style="font-size: 40px;">+</label>
                     </div>
                     <div class="popup__textbox">
-                        <h1 style="color: #333;">Lorem Ipsum</h1>
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+                        <h1 style="color: #333;" id="modal_titulo"></h1>
+                        <p id="modal_corpo"></p>
                     </div>
                 </div>
             </div>

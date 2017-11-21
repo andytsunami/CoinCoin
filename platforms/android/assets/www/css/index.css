@@ -814,3 +814,122 @@ border-radius: 100px;
 .hide{
   display: none;
 }
+
+
+/**		POPUP	***/
+.trigger{
+	font-size: 2em;
+	text-transform: uppercase;
+	margin-top: 10%;
+	display: block;
+}
+
+.popup__textbox{
+	color: #999999;
+	line-height: 25px;
+	font-size: 16px;
+	padding: 10px 3px 0 3px;
+	overflow: auto;
+}
+
+@keyframes bg {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes inner {
+    0% {transform: scale(0.8);}
+    50% {transform: scale(1.06);}
+	100% {transform: scale(1);}
+}
+
+@-webkit-keyframes bg {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@-webkit-keyframes inner {
+    0% {transform: scale(0.8);}
+    50% {transform: scale(1.06);}
+	100% {transform: scale(1);}
+}
+
+.popup__check{
+	display: none;
+}
+
+.popup__base, .popup__bg{
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	opacity: 0;
+	cursor:zoom-out;
+}
+
+.popup__base{
+	background-color: rgba(0,0,0,0.5);
+	display: none;
+}
+
+.popup__check:checked + .popup__base{
+	display: block;
+	animation-name: bg;
+    animation-duration: .5s;
+	animation-fill-mode:forwards;
+	-webkit-animation-name: bg;
+    -webkit-animation-duration: .5s;
+	-webkit-animation-fill-mode:forwards;
+	z-index:9999;
+}
+
+.popup__inner{
+	/*position: absolute;*/
+	border-radius: 4px;
+	box-shadow: rgba(0, 0, 0, 0.45) 0px 0px 10px;	
+	z-index: 10;
+	width: 100%;
+	max-width: 300px;
+	margin: auto;
+	margin-top: 190px;
+	padding: 10px;
+	background-color: #fff;
+	display: block;
+	cursor:default;
+}
+
+.popup__check:checked + .popup__base .popup__inner{
+	animation-name: inner;
+    animation-duration: .5s;
+	animation-fill-mode:forwards;
+	-webkit-animation-name: inner;
+    -webkit-animation-duration: .5s;
+	-webkit-animation-fill-mode:forwards;
+}
+
+.popup__calign{
+	float: right;
+	padding-right: 32px;
+	margin-top: -10px;
+	font-size: 50px;
+}
+
+.popup__close{
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	display: block;
+	position: absolute;
+	z-index: 10;
+	text-align: right;
+	cursor: pointer;
+	color: #b43d54;
+}
+
+#modal_trigger{
+  display: none;
+}
+
+/**  /POPUP***/

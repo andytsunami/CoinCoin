@@ -67,7 +67,9 @@
                         <label for="modal" class="popup__close" style="font-size: 40px;">+</label>
                     </div>
                     <div class="popup__textbox">
-                        <h1 style="color: #333;" id="modal_titulo"></h1>
+                        <div class="modal erro">
+                            <h1 style="color: #333;" id="modal_titulo"></h1>
+                        </div>
                         <p id="modal_corpo"></p>
                     </div>
                 </div>
@@ -78,8 +80,7 @@
         	<div class="app-panel app-panel--one" style="background: url(img/bg1.png); background-size: cover; background-position: bottom;">
             	<div style="vertical-align: middle;">                       
                     <center><img src="img/logo.png" style="width: 100%; max-width: 350px; margin-bottom: 50px;" /></center>
-                    
-                   <center><a href="#instrucao1" style="text-decoration: none"><p class="cor-btn btn-comecar" id="comecar">Começar</p></a></center>
+                   <center><a style="text-decoration: none"><p class="cor-btn btn-comecar" id="comecar">Começar</p></a></center>
             	</div>  
         	</div>
 		</div><!--/inicio-->
@@ -202,7 +203,7 @@
                     </div>
                 </div>
                 
-                <div class="box" style="max-width: 290px; margin: auto; padding: 10px 0; margin-top: 30px; font-size: 16px;">
+                <div class="box hide" style="max-width: 290px; margin: auto; padding: 10px 0; margin-top: 30px; font-size: 16px;">
                     <center><table>
                         <tr>
                             <td><img src="img/moeda-bronze.png"/></td>
@@ -214,7 +215,7 @@
                     </table></center>
                 </div>
                 
-                <div class="box" style="max-width: 290px; margin: auto; padding: 10px 0; margin-top: 30px; font-size: 16px;">
+                <div class="box hide" style="max-width: 290px; margin: auto; padding: 10px 0; margin-top: 30px; font-size: 16px;">
                     <center><table>
                         <tr>
                             <td><img src="img/moeda-prata.png"/></td>
@@ -226,7 +227,7 @@
                     </table></center>
                 </div>
                 
-                <div class="box" style="max-width: 290px; margin: auto; padding: 10px 0; margin-top: 30px; font-size: 16px;">
+                <div class="box hide" style="max-width: 290px; margin: auto; padding: 10px 0; margin-top: 30px; font-size: 16px;">
                     <center><table>
                         <tr>
                             <td><img src="img/moeda-ouro.png"/></td>
@@ -253,9 +254,9 @@
                     <!--<div style="background: #6699CC; box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.1); color: white; font-size: 18px; padding: 15px 25px;">-->
                     <center>
                         <form class="validacao-responsavel">
-                            <input class="form-control" id="senha_do_responsavel" type="password" placeholder="Senha">                                      
+                            <input class="form-control" id="senhaDigitada" type="password" placeholder="Senha">                                      
                             <!--<button class="cor-btn">Xablau</button>-->
-                            <center><a href="#painel-responsavel" style="text-decoration: none"><p id="cadastrar" style="margin: 20px 0 10px 0;" class="cor-btn btn-comecar">Entrar</p></a></center>             
+                            <center><a id="validaSenha" style="text-decoration: none"><p style="margin: 20px 0 10px 0;" class="cor-btn btn-comecar">Entrar</p></a></center>             
                         </form>
                         <a href="#painel-crianca" style="text-decoration: none; color: rgba(153,153,153,1);"><p style="margin: 20px 0; padding:0"> &larr; Voltar </p></a>
                     </center>
@@ -419,7 +420,7 @@
                 </div>
                         
                 <div style=" padding: 10px 10px 0 10px">
-                	<p>Para criar a metra bronze é recomendado que você escolha um(a):</p>    
+                	<p>Para criar a meta bronze é recomendado que você escolha um(a):</p>    
                     
                     <ol>
                     	<li>periodo curto de tempo</li>
@@ -521,7 +522,11 @@
                     <input class="form-control" id="presente_bronze" type="text" placeholder="Ex: Ir ao cinema, tomar sorvete... ">   
                 </div>
        		</div>	
-		</div><!--/cadastrar-meta-ouro-->
+        </div><!--/cadastrar-meta-ouro-->
+        
+        <a href="#painel-crianca" id="paraCrianca"></a>
+        <a href="#instrucao1" id="paraInstrucao"></a>
+        <a href="#instrucao3" id="paraCadastro"></a>
         
         
         

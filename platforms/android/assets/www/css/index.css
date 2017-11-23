@@ -932,4 +932,13 @@ border-radius: 100px;
   display: none;
 }
 
+.erro {
+  background: #e92f29;
+  border-radius: 4px 4px 0 0; 
+  font-size: 18px; 
+  color:white; 
+  text-align: center;
+  padding: 6px;
+}
+
 /**  /POPUP***/

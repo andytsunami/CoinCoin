@@ -18,14 +18,11 @@ var app = {
         //app.listaUsuario();
         app.conecta();
         app.atualizarForms();
-        
-
-
-       // $('#comecar').click(app.conecta);
-        $('#segue').click(function(){
+               
+        $('#comecar').click(function(){
             app.saldo();
             app.inicia();
-            app.showError("Teste de modal");
+            
         });
         $('#refresh-paired-devices').click(app.listPairedDevices);
         $('#paired-devices form').submit(app.selectDevice);
@@ -35,6 +32,7 @@ var app = {
         $("#saldo").click(app.saldo);
         $("#zerar").click(app.zerar);
         $("#cadastrar").click(app.cadastrar);
+        $("#validaSenha").click(app.verificaSenha);
 
         $('#terminal .go-back').click(function () {
             app.goTo('paired-devices');
@@ -181,7 +179,7 @@ var app = {
 
         if (isIncoming) {
             data = '<span class="in">' + data + '</span>';
-        }
+        }    
         else {
             data = '<span class="out">' + data + '</span>';
         }
@@ -203,18 +201,22 @@ var app = {
     },
 
     showError: function (error) {
-        
-        $("#modal_titulo").text("Erro");
-        $("#modal_corpo").text(error);
-        $(".trigger").click();
-        //alert(error);
+            window.setTimeout(function(){
+
+                $("#modal_titulo").text("Erro");
+                $("#modal_corpo").text(error);
+                $(".trigger").click();
+            },1000);
+            
+            //alert(error);
     },
+
     conecta: function(event) {
        // event.preventDefault();
         bluetoothSerial.list(function (devices) {
             var $list = $('#dica');
             var $endereco;
-
+ 
             if (!devices.length) {
                 $list.text('Not found');
                 return;
@@ -321,9 +323,30 @@ var app = {
         db.transaction(function(tx){
             tx.executeSql("select count(*) as quant from cadastros",[], function(tx,rs){
                 if(rs.rows.item(0).quant > 0){
-                    app.vaPara("paraResponsavel");
+                    app.vaPara("paraCrianca");
+                } else {
+                    app.vaPara("paraCadastro");
                 }
             });
+        });
+    },
+
+    verificaSenha: function(){
+        db.transaction(function(tx){
+            tx.executeSql("SELECT senha AS sen FROM cadastros WHERE sen = ?",[$("#senhaDigitada").val() == undefined ? "cipa" : $("#senhaDigitada").val() ], function(tx,rs){
+                app.showError("Senha digitada... " + $("#senhaDigitada").val());
+                if(rs.rows.length > 0){
+                    app.showError("Se certo... " + rs.rows.item(0).sen);
+                    app.vaPara("paraResponsavel");
+                    return;
+                } else {
+                    app.showError('Senha invalida');
+                    app.vaPara("paraCrianca");
+                }
+                
+            },function(error) {
+                app.showError('Erro ao validar senha: ' + error.message);
+              });
         });
     }
     

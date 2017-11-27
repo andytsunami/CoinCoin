@@ -1,3 +1,4 @@
+//Exemplo https://startingelectronics.org/tutorials/arduino/modules/OLED-128x64-I2C-display/
 #include <Wire.h>
 #include <Adafruit_SSD1306.h>
 #include <Adafruit_GFX.h>

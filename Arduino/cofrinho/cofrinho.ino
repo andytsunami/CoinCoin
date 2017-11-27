@@ -2,9 +2,16 @@
 //Carrega a biblioteca SoftwareSerial
 #include <SoftwareSerial.h>
 #include <Wire.h>
+
 //Bibliotecas do OLED
 #include <Adafruit_SSD1306.h>
 #include <Adafruit_GFX.h>
+
+//Motor
+#include <Servo.h>
+#define SERVO 6 // Porta Digital 6 PWM
+Servo s; // Variável Servo
+int pos; // Posição Servo
 
 //Define os pinos para a serial  (RX, TX)
 SoftwareSerial MinhaSerial(50, 51);
@@ -49,6 +56,8 @@ void setup() {
   display.setCursor(10,5);
   display.setTextSize(2.5);
   display.setTextColor(WHITE);
+
+  iniciaMotor();
 }
 
 void loop() {
@@ -91,6 +100,8 @@ if(digitalRead(AMARELO) == ATIVO) {
   }
 
   delay(100);
+
+  testaMotor();
   
 }
 
@@ -159,6 +170,35 @@ void piscaValor(String valor){
       delay(500);
       display.clearDisplay();
       count++;
+    }
+  }
+
+void iniciaMotor(){
+  s.attach(SERVO);
+  Serial.begin(115200);
+  
+  s.write(0); // Inicia motor posição zero
+}
+
+void testaMotor(){
+  abre();
+  delay(1000);
+  fecha();
+}
+
+void abre(){
+    Serial.println("Abrindo...");
+    for(pos = 0; pos < 90; pos++) {
+      s.write(pos);
+      delay(15);
+    }
+  }
+
+  void fecha(){
+    Serial.println("Fechando...");
+    for(pos = 90; pos >= 0; pos--){
+      s.write(pos);
+      delay(15);
     }
   }
 

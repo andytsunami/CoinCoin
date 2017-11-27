@@ -101,7 +101,7 @@ if(digitalRead(AMARELO) == ATIVO) {
 
   delay(100);
 
-  testaMotor();
+  //testaMotor();
   
 }
 
@@ -140,12 +140,7 @@ void pegaValor(){
     piscaValor("R$ 1,00");
     break;
   }
-
-  Serial.print("Quantidade total: R$" );
-  Serial.println(saldo);
-  MinhaSerial.write("s|");
-  MinhaSerial.println(saldo);
-  
+ 
 }
 
 void mostraSaldo(){
@@ -156,6 +151,7 @@ void mostraSaldo(){
 }
 
 void piscaValor(String valor){
+  animaPorquinho();
   int count = 0;
   while(count <= 2) {
       display.clearDisplay();
@@ -200,5 +196,12 @@ void abre(){
       s.write(pos);
       delay(15);
     }
+  }
+
+  void animaPorquinho(){
+  Serial.print("Quantidade total: R$" );
+  Serial.println(saldo);
+  MinhaSerial.write("s|");
+  MinhaSerial.println(saldo);
   }
 

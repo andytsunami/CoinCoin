@@ -1,6 +1,10 @@
 //Modulo bluetooth HC-06 - Configuracao
 //Carrega a biblioteca SoftwareSerial
 #include <SoftwareSerial.h>
+#include <Wire.h>
+//Bibliotecas do OLED
+#include <Adafruit_SSD1306.h>
+#include <Adafruit_GFX.h>
 
 //Define os pinos para a serial  (RX, TX)
 SoftwareSerial MinhaSerial(50, 51);
@@ -15,6 +19,11 @@ String command = "";
 #define VERMELHO 9
 #define AMARELO 8
 #define ATIVO 0
+
+//Visor OLED
+#define OLED_ADDR   0x3C
+
+Adafruit_SSD1306 display(-1);
 
 int posicao = 0;
 float saldo = 0.0;
@@ -34,11 +43,16 @@ void setup() {
   pinMode(VERMELHO, INPUT_PULLUP);
   pinMode(AMARELO, INPUT_PULLUP);
 
-  
-
+  //Visor OLED
+  display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR);
+  display.clearDisplay();
+  display.setCursor(10,5);
+  display.setTextSize(2.5);
+  display.setTextColor(WHITE);
 }
 
 void loop() {
+  mostraSaldo();
   if (MinhaSerial.available())
   {
     while (MinhaSerial.available())
@@ -96,18 +110,23 @@ void pegaValor(){
   switch(posicao) {
     case AMARELO : Serial.println("0.10");
     saldo += 0.10;
+    piscaValor("R$ 0,10");
     break;
     case VERMELHO : Serial.println("0.05");
     saldo += 0.05;
+    piscaValor("R$ 0,05");
     break;
     case LARANJA : Serial.println("0.50");
     saldo += 0.50;
+    piscaValor("R$ 0,50");
     break;
     case VERDE : Serial.println("0.25");
     saldo += 0.25;
+    piscaValor("R$ 0,25");
     break;
     case AZUL : Serial.println("1.00");
     saldo ++;
+    piscaValor("R$ 1,00");
     break;
   }
 
@@ -117,4 +136,29 @@ void pegaValor(){
   MinhaSerial.println(saldo);
   
 }
+
+void mostraSaldo(){
+  display.setCursor(10,5);
+  display.print("R$ ");
+  display.print(saldo);
+  display.display();
+}
+
+void piscaValor(String valor){
+  int count = 0;
+  while(count <= 2) {
+      display.clearDisplay();
+      display.setCursor(10,5);
+      display.print(valor);
+      display.display();
+      delay(500);
+      display.clearDisplay();
+      display.setCursor(10,5);
+      display.print("");
+      display.display();
+      delay(500);
+      display.clearDisplay();
+      count++;
+    }
+  }
 

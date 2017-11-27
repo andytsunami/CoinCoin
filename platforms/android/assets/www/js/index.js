@@ -17,13 +17,13 @@ var app = {
         db = window.sqlitePlugin.openDatabase({name: 'coincoin.db', location: 'default'});
         app.geraBanco();
         //app.listaUsuario();
-        app.conecta();
+       // app.conecta();
         app.atualizarForms();
                
         $('#comecar').click(function(){
-            if(!conectado){
+            
                 app.conecta();
-            }
+            
             app.saldo();
             app.inicia();
             
@@ -135,7 +135,7 @@ var app = {
     },
 
     handleData: function (data) {
-
+//alert(data);
         if(data.split("|")[0] == "s"){
             app.atualizaSaldo(data.split("|")[1]);
         }

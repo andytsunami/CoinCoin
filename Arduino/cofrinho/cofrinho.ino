@@ -57,11 +57,11 @@ void setup() {
   display.setTextSize(2.5);
   display.setTextColor(WHITE);
 
-  iniciaMotor();
+  //iniciaMotor();
 }
 
 void loop() {
-  mostraSaldo();
+  
   if (MinhaSerial.available())
   {
     while (MinhaSerial.available())
@@ -98,7 +98,7 @@ if(digitalRead(AMARELO) == ATIVO) {
   }else if(digitalRead(BRANCO) == ATIVO) {
     confirmaValor();
   }
-
+  mostraSaldo();
   delay(100);
 
   //testaMotor();
@@ -158,12 +158,12 @@ void piscaValor(String valor){
       display.setCursor(10,5);
       display.print(valor);
       display.display();
-      delay(500);
+     // delay(500);
       display.clearDisplay();
       display.setCursor(10,5);
       display.print("");
       display.display();
-      delay(500);
+     // delay(500);
       display.clearDisplay();
       count++;
     }

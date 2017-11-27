@@ -5,6 +5,7 @@
 
 'use strict';
 var db = null;
+var conectado = false;
 var app = {
 
     initialize: function () {
@@ -20,6 +21,9 @@ var app = {
         app.atualizarForms();
                
         $('#comecar').click(function(){
+            if(!conectado){
+                app.conecta();
+            }
             app.saldo();
             app.inicia();
             
@@ -29,7 +33,7 @@ var app = {
         $('#toggle-connection').click(app.toggleConnection);
         $('#clear-data').click(app.clearData);
         $('#terminal form').submit(app.sendData);
-        $("#saldo").click(app.saldo);
+        $("#visor").click(app.saldo);
         $("#zerar").click(app.zerar);
         $("#cadastrar").click(app.cadastrar);
         $("#validaSenha").click(app.verificaSenha);
@@ -154,6 +158,7 @@ var app = {
     },
 
     saldo: function(){
+        //alert("Cade o saldo?");
         var data = 's';
         bluetoothSerial.write(data, null, app.showError);
     },
@@ -201,12 +206,18 @@ var app = {
     },
 
     showError: function (error) {
-            window.setTimeout(function(){
-
-                $("#modal_titulo").text("Erro");
-                $("#modal_corpo").text(error);
-                $(".trigger").click();
-            },1000);
+        
+        if(error.toUpperCase() == "DEVICE CONNECTION WAS LOST"){
+            conectado = false;
+            $("#modal_titulo").text("Erro");
+            $("#modal_corpo").text("Conexão com o cofre foi perdida.");
+            $(".trigger").click();
+            app.vaPara("paraInicio");
+        } else {
+            $("#modal_titulo").text("Erro");
+            $("#modal_corpo").text(error);
+            $(".trigger").click();
+        }
             
             //alert(error);
     },
@@ -249,7 +260,7 @@ var app = {
                     }
     
                     app.connect($endereco);
-                        app.saldo();
+                       // app.saldo();
                         $("#segue").removeClass("hide");
                 },
             );

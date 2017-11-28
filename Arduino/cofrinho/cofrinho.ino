@@ -158,12 +158,12 @@ void piscaValor(String valor){
       display.setCursor(10,5);
       display.print(valor);
       display.display();
-     // delay(500);
+      delay(500);
       display.clearDisplay();
       display.setCursor(10,5);
       display.print("");
       display.display();
-     // delay(500);
+      delay(500);
       display.clearDisplay();
       count++;
     }

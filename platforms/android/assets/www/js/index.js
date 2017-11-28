@@ -21,11 +21,9 @@ var app = {
         app.atualizarForms();
                
         $('#comecar').click(function(){
-            
-                app.conecta();
-            
-            app.saldo();
+            app.conecta();
             app.inicia();
+            app.saldo();
             
         });
         $('#refresh-paired-devices').click(app.listPairedDevices);
@@ -172,8 +170,15 @@ var app = {
 
     atualizaSaldo: function(saldo){
         if(saldo != "" || saldo != undefined){
-            $("#saldo").text("R$ " + saldo);
-            $('#porcoGif').attr("src",$('#porcoGif').attr("src"));
+
+            db.transaction(function(tx) {
+                tx.executeSql('UPDATE cadastros SET saldo = ? WHERE id = ?',[saldo, $("#id_cadastro").val()]);
+              }, function(error) {
+                app.showError('Erro ao atualizar saldo: ' + error.message);
+              }, function() {
+                $("#saldo").text("R$ " + saldo);
+                $('#porcoGif').attr("src",$('#porcoGif').attr("src"));
+              });
         } else {
             app.saldo();
         }
@@ -269,8 +274,8 @@ var app = {
 
     geraBanco: function(){
         db.transaction(function(tx) {
-        //    tx.executeSql('DROP TABLE cadastros');
-            tx.executeSql('CREATE TABLE IF NOT EXISTS cadastros (nomeCrianca, nomeResponsavel, email, senha)');
+        //   tx.executeSql('DROP TABLE cadastros');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS cadastros (id,nomeCrianca, nomeResponsavel, email, senha, saldo)');
             //tx.executeSql('INSERT INTO usuario VALUES (?,?)', ['Papai', 101]);
             //tx.executeSql('INSERT INTO usuario VALUES (?,?)', ['Mamae', 202]);
           }, function(error) {
@@ -297,13 +302,15 @@ var app = {
     }, 
 
     cadastrar: function(){
+        var id = $("#id_cadastro").val();
         var nomeCrianca = $("#nome_da_crianca").val();
         var nomeResponsavel = $("#nome_do_responsavel").val();
         var email = $("#email_do_responsavel").val();
         var senha = $("#senha_do_responsavel").val();
+        var saldo = 0.0;
 
         db.transaction(function(tx) {
-            tx.executeSql('INSERT INTO cadastros VALUES (?,?,?,?)',[nomeCrianca,nomeResponsavel,email, senha]);
+            tx.executeSql('INSERT INTO cadastros VALUES (?,?,?,?,?,?)',[id,nomeCrianca,nomeResponsavel,email, senha, saldo]);
           }, function(error) {
             app.showError('Erro ao cadastrar: ' + error.message);
           }, function() {
@@ -314,7 +321,7 @@ var app = {
     }, 
     atualizarForms: function(){
         db.transaction(function(tx){
-            tx.executeSql("select * from cadastros",[],function(tx,rs){
+            tx.executeSql("select * from cadastros where id = ?",[$("#id_cadastro").val()],function(tx,rs){
               
                   $("#nomeCrianca").text(rs.rows.item(0).nomeCrianca);
                   $("#responsavelCrianca").text(rs.rows.item(0).nomeResponsavel);
@@ -323,6 +330,7 @@ var app = {
                   $("#nome_do_responsavel").val(rs.rows.item(0).nomeResponsavel);
                   $("#email_do_responsavel").val(rs.rows.item(0).email);
                   $("#senha_do_responsavel").val(rs.rows.item(0).senha);
+                  $("#saldo").text("R$ " + rs.rows.item(0).saldo);
             });
         });
     },
@@ -345,16 +353,13 @@ var app = {
     verificaSenha: function(){
         db.transaction(function(tx){
             tx.executeSql("SELECT senha AS sen FROM cadastros WHERE sen = ?",[$("#senhaDigitada").val() == undefined ? "cipa" : $("#senhaDigitada").val() ], function(tx,rs){
-                app.showError("Senha digitada... " + $("#senhaDigitada").val());
                 if(rs.rows.length > 0){
-                    app.showError("Se certo... " + rs.rows.item(0).sen);
                     app.vaPara("paraResponsavel");
+                    $("#senhaDigitada").val("")
                     return;
                 } else {
                     app.showError('Senha invalida');
-                    app.vaPara("paraCrianca");
-                }
-                
+                }                
             },function(error) {
                 app.showError('Erro ao validar senha: ' + error.message);
               });

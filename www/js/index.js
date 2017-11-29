@@ -283,6 +283,18 @@ var app = {
           }, function() {
                 
           });
+
+          db.transaction(function(tx) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS metas (dias, valor, presente, tipoMeta)');
+              }, function(error) {
+                app.showError('Transaction ERROR: ' + error.message);
+              }, function() {
+                    
+              });
+    
+
+
+
     },
 
     listaUsuario: function(){
@@ -364,7 +376,11 @@ var app = {
                 app.showError('Erro ao validar senha: ' + error.message);
               });
         });
-    }
+    },
+
+    cadastraBronze: function(){
+        
+    },
     
 };
 

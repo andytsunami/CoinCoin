@@ -53,6 +53,10 @@ var app = {
             app.cadastrarOuro();
         });
 
+        $("#dicass").click(function(){
+            app.metaBronze();
+        });
+
     },
 
   
@@ -378,7 +382,6 @@ var app = {
     },
 
     cadastrarBronze: function(){
-        alert("cadastrarBronze");
         var dias = $("#tempo_poupar_bronze").val();
         var quantidade = $("#quanto_poupar_bronze").val();
         var recompensa = $("#presente_bronze").val();
@@ -472,8 +475,30 @@ var app = {
                 app.showError('Erro ao consultar meta de Ouro: ' + error.message);
             });
         });
-    }
-    
+    },
+
+    metaBronze: function(){
+        var saldo;
+        var metaBronze;
+        var objetivoBronze;
+
+        db.transaction(function(tx){
+            tx.executeSql("select saldo from cadastros where id = ?",[$("#id_cadastro").val()],function(tx,rs){
+                  saldo = parseFloat(rs.rows.item(0).saldo);
+                    tx.executeSql("select valor,presente from metas where tipoMeta = ?",["Bronze"],function(tx,rs){
+                          metaBronze = parseFloat(rs.rows.item(0).valor);
+                          //app.showError("Saldo: " + saldo + " e meta Bronze: " + metaBronze + " agora faltam: " + (metaBronze - saldo) );
+                        $(".saldoCard").text("R$ " + saldo);
+                        $("#cardBronzeValor").text("R$ " + metaBronze);
+                        $("#cardBronzePresente").text(rs.rows.item(0).presente);
+                    },function(error) {
+                        app.showError('Erro ao consultar valor de Bronze: ' + error.message);
+                    });
+            },function(error) {
+                app.showError('Erro ao consultar saldo: ' + error.message);
+            });
+        });
+    },
     
 };
 

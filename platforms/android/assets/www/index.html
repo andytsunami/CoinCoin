@@ -46,6 +46,28 @@
                 </div>
             </div>
         </section>
+        
+        <section>
+            <input type="checkbox" id="modal-abrircofre" class="popup__check" />
+            <div class="popup__base">
+                <label for="modal-abrircofre" class="popup__bg"></label>
+                <div class="popup__inner">
+                    <div class="popup__calign">
+                        <label for="modal-abrircofre" class="popup__close" style="font-size: 40px;">+</label>
+                    </div>
+                    <div class="popup__textbox">
+                        <div class="modal">
+                            <h1 style="color: #333;" id="modal_titulo">Abrir o cofre</h1>
+                        </div>
+                        <p id="modal_corpo">Ao abrir o cofre, todas as metas serão zeradas. Tem certeza de que quer abrir?</p>
+                        <center>
+                        <label class="btn-sim">Sim</label>
+                        <label for="modal-abrircofre" class="btn-nao" style="margin-left:10px;">Não</label>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </section>
     
 		<div data-role="page" id="inicio">
         	<div class="app-panel app-panel--one" style="background: url(img/bg1.png); background-size: cover; background-position: bottom;">
@@ -261,6 +283,8 @@
                                 </div>
                             </div>                            
                             <p style="font-size: 16px; font-weight: bold; text-align: center; margin: 20px 0 0 0">Meta diária: R$ 0,15</p>
+                            <center><label class="cor-btn btn-cofre" for="modal-abrircofre">Abrir o cofre</label></center>
+                            
                         </div>
                     </div>
                 </div>

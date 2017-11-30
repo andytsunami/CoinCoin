@@ -247,12 +247,12 @@
                         </div>
                         
                         <div style=" padding: 10px 10px 0 10px">
-                            <p style="font-size:20px; margin: 0; font-weight: bold;">Ir ao cinema</p>
+                            <p style="font-size:20px; margin: 0; font-weight: bold;"><span id="cardBronzePresente"></span></p>
                             <table class="meta-pai" style="width: 100%;">
                                 <tr>
-                                    <td><p><img src="img/coin.png" /> 1,45</p></td>
+                                    <td><p><img src="img/coin.png" /><span class="saldoCard"></span></p></td>
                                     <td><img src="img/seta.png" /></td>
-                                    <td><p><img src="img/coins.png" /> 551,45</p></td>
+                                    <td><p><img src="img/coins.png" /> <span id="cardBronzeValor"></span></p></td>
                                 </tr>
                             </table>
                             <div class="progress-responsavel">
@@ -278,7 +278,7 @@
                 <br/>
                 <br/>
                 
-                <center>
+                <center id="dicass">
                     <div class="visor-cofre">
                         <span style="font-size: 20px;">Dicas</span>
                     </div>
@@ -364,7 +364,7 @@
                         	<h2>Cadastrar ou editar meta</h2>
                         </td>
                         <td>
-                            <a href="#cadastrar-meta" style="text-decoration: none"><img src="img/voltar.png" style="float: right;" /></a>
+                            <a id="finalizarBronze" style="text-decoration: none"><img src="img/voltar.png" style="float: right;" /></a>
                         </td>
 					</tr>
 				</table>
@@ -405,7 +405,7 @@
                         	<h2>Cadastrar ou editar meta</h2>
                         </td>
                         <td>
-                            <a href="#cadastrar-meta" style="text-decoration: none"><img src="img/voltar.png" style="float: right;" /></a>
+                            <a id="finalizarPrata" style="text-decoration: none"><img src="img/voltar.png" style="float: right;" /></a>
                         </td>
 					</tr>
 				</table>
@@ -416,7 +416,7 @@
                 </div>
                         
                 <div style=" padding: 10px 10px 0 10px">
-                	<p>Para criar a metra bronze é recomendado que você escolha um(a):</p>    
+                	<p>Para criar a meta prata é recomendado que você escolha um(a):</p>    
                     
                     <ol>
                     	<li>periodo curto de tempo</li>
@@ -426,14 +426,14 @@
                     <br/>                         
                                        
                     <strong><p>Em quanto tempo deve poupar?</p></strong>
-                    <input class="form-control" id="tempo_poupar_bronze" type="number" placeholder="Ex: 10 dias...">  
+                    <input class="form-control" id="tempo_poupar_prata" type="number" placeholder="Ex: 10 dias...">  
                                           
                                        
                     <strong><p>Quantos coins ele deve poupar?</p></strong>
-                    <input class="form-control" id="quanto_poupar_bronze" type="number" placeholder="Ex: R$ 10,00">
+                    <input class="form-control" id="quanto_poupar_prata" type="number" placeholder="Ex: R$ 10,00">
                                        
                     <strong><p>Qual será o presente?</p></strong>
-                    <input class="form-control" id="presente_bronze" type="text" placeholder="Ex: Ir ao cinema, tomar sorvete... ">   
+                    <input class="form-control" id="presente_prata" type="text" placeholder="Ex: Ir ao cinema, tomar sorvete... ">   
                 </div>
        		</div>	
 		</div><!--/cadastrar-meta-prata-->
@@ -446,7 +446,7 @@
                         	<h2>Cadastrar ou editar meta</h2>
                         </td>
                         <td>
-                            <a href="#cadastrar-meta" style="text-decoration: none"><img src="img/voltar.png" style="float: right;" /></a>
+                            <a id="finalizarOuro" style="text-decoration: none"><img src="img/voltar.png" style="float: right;" /></a>
                         </td>
 					</tr>
 				</table>
@@ -457,7 +457,7 @@
                 </div>
                         
                 <div style=" padding: 10px 10px 0 10px">
-                	<p>Para criar a metra bronze é recomendado que você escolha um(a):</p>    
+                	<p>Para criar a meta ouro é recomendado que você escolha um(a):</p>    
                     
                     <ol>
                     	<li>periodo curto de tempo</li>
@@ -467,14 +467,14 @@
                     <br/>                         
                                        
                     <strong><p>Em quanto tempo deve poupar?</p></strong>
-                    <input class="form-control" id="tempo_poupar_bronze" type="number" placeholder="Ex: 10 dias...">  
+                    <input class="form-control" id="tempo_poupar_ouro" type="number" placeholder="Ex: 10 dias...">  
                                           
                                        
                     <strong><p>Quantos coins ele deve poupar?</p></strong>
-                    <input class="form-control" id="quanto_poupar_bronze" type="number" placeholder="Ex: R$ 10,00">
+                    <input class="form-control" id="quanto_poupar_ouro" type="number" placeholder="Ex: R$ 10,00">
                                        
                     <strong><p>Qual será o presente?</p></strong>
-                    <input class="form-control" id="presente_bronze" type="text" placeholder="Ex: Ir ao cinema, tomar sorvete... ">   
+                    <input class="form-control" id="presente_ouro" type="text" placeholder="Ex: Ir ao cinema, tomar sorvete... ">   
                 </div>
        		</div>	
         </div><!--/cadastrar-meta-ouro-->
@@ -483,6 +483,7 @@
         <a href="#instrucao1" id="paraInstrucao"></a>
         <a href="#instrucao3" id="paraCadastro"></a>
         <a href="#inicio" id="paraInicio"></a>
+        <a href="#cadastrar-meta" id="paraCadastroMeta"></a>
         
         
         

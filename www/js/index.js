@@ -19,6 +19,7 @@ var app = {
         //app.listaUsuario();
        // app.conecta();
         app.atualizarForms();
+        app.atualizarMetas();
                
         $('#comecar').click(function(){
             app.conecta();
@@ -38,6 +39,22 @@ var app = {
 
         $('#terminal .go-back').click(function () {
             app.goTo('paired-devices');
+        });
+
+        $("#finalizarBronze").click(function(){
+            app.cadastrarBronze();
+        });
+
+        $("#finalizarPrata").click(function(){
+            app.cadastrarPrata();
+        });
+
+        $("#finalizarOuro").click(function(){
+            app.cadastrarOuro();
+        });
+
+        $("#dicass").click(function(){
+            app.metaBronze();
         });
 
     },
@@ -284,6 +301,7 @@ var app = {
                 
           });
 
+          //Tabela de metas
           db.transaction(function(tx) {
                 tx.executeSql('CREATE TABLE IF NOT EXISTS metas (dias, valor, presente, tipoMeta)');
               }, function(error) {
@@ -331,21 +349,6 @@ var app = {
        
           app.atualizarForms();
     }, 
-    atualizarForms: function(){
-        db.transaction(function(tx){
-            tx.executeSql("select * from cadastros where id = ?",[$("#id_cadastro").val()],function(tx,rs){
-              
-                  $("#nomeCrianca").text(rs.rows.item(0).nomeCrianca);
-                  $("#responsavelCrianca").text(rs.rows.item(0).nomeResponsavel);
-
-                  $("#nome_da_crianca").val(rs.rows.item(0).nomeCrianca);
-                  $("#nome_do_responsavel").val(rs.rows.item(0).nomeResponsavel);
-                  $("#email_do_responsavel").val(rs.rows.item(0).email);
-                  $("#senha_do_responsavel").val(rs.rows.item(0).senha);
-                  $("#saldo").text("R$ " + rs.rows.item(0).saldo);
-            });
-        });
-    },
     vaPara: function(painel){
         //alert("Pulando para " + painel);
         $("#"+painel).click();
@@ -378,8 +381,123 @@ var app = {
         });
     },
 
-    cadastraBronze: function(){
-        
+    cadastrarBronze: function(){
+        var dias = $("#tempo_poupar_bronze").val();
+        var quantidade = $("#quanto_poupar_bronze").val();
+        var recompensa = $("#presente_bronze").val();
+        var tipoMeta = "Bronze";
+
+        app.cadastrarMeta(dias,quantidade,recompensa,tipoMeta);
+
+
+    },
+
+    cadastrarPrata: function(){
+        var dias = $("#tempo_poupar_prata").val();
+        var quantidade = $("#quanto_poupar_prata").val();
+        var recompensa = $("#presente_prata").val();
+        var tipoMeta = "Prata";
+
+        app.cadastrarMeta(dias,quantidade,recompensa,tipoMeta);
+
+
+    },
+
+    cadastrarOuro: function(){
+        var dias = $("#tempo_poupar_ouro").val();
+        var quantidade = $("#quanto_poupar_ouro").val();
+        var recompensa = $("#presente_ouro").val();
+        var tipoMeta = "Ouro";
+
+        app.cadastrarMeta(dias,quantidade,recompensa,tipoMeta);
+
+
+    },
+
+    cadastrarMeta: function(dias,quantidade,recompensa,tipoMeta){
+        db.transaction(function(tx){
+            tx.executeSql("DELETE FROM metas WHERE tipoMeta = ?",[tipoMeta], function(){
+            
+                tx.executeSql("INSERT INTO metas VALUES (?,?,?,?)",[dias,quantidade,recompensa,tipoMeta], function(tx,rs){
+                    app.vaPara("paraCadastroMeta");
+                },function(error) {
+                    app.showError('Erro ao inserir nova meta: ' + error.message);
+                });            
+            },function(error) {
+                app.showError('Erro ao excluir meta anterior: ' + error.message);
+            });
+        });
+    },
+    atualizarForms: function(){
+        db.transaction(function(tx){
+            tx.executeSql("select * from cadastros where id = ?",[$("#id_cadastro").val()],function(tx,rs){
+              
+                  $("#nomeCrianca").text(rs.rows.item(0).nomeCrianca);
+                  $("#responsavelCrianca").text(rs.rows.item(0).nomeResponsavel);
+
+                  $("#nome_da_crianca").val(rs.rows.item(0).nomeCrianca);
+                  $("#nome_do_responsavel").val(rs.rows.item(0).nomeResponsavel);
+                  $("#email_do_responsavel").val(rs.rows.item(0).email);
+                  $("#senha_do_responsavel").val(rs.rows.item(0).senha);
+                  $("#saldo").text("R$ " + rs.rows.item(0).saldo);
+            });
+        });
+    },
+
+    atualizarMetas: function(){
+        db.transaction(function(tx){
+            tx.executeSql("select * from metas where tipoMeta = ?",["Bronze"],function(tx,rs){
+                $("#tempo_poupar_bronze").val(rs.rows.item(0).dias);
+                $("#quanto_poupar_bronze").val(rs.rows.item(0).valor);
+                $("#presente_bronze").val(rs.rows.item(0).presente);
+            },
+            function(error) {
+                app.showError('Erro ao consultar meta de Bronze: ' + error.message);
+            });  
+            
+            tx.executeSql("select * from metas where tipoMeta = ?",["Prata"],function(tx,rs){
+                
+                $("#tempo_poupar_prata").val(rs.rows.item(0).dias);
+                $("#quanto_poupar_prata").val(rs.rows.item(0).valor);
+                $("#presente_prata").val(rs.rows.item(0).presente);
+                    
+            }, function(error) {
+                app.showError('Erro ao consultar meta de Prata: ' + error.message);
+            });
+
+            tx.executeSql("select * from metas where tipoMeta = ?",["Ouro"],function(tx,rs){
+                
+                $("#tempo_poupar_ouro").val(rs.rows.item(0).dias);
+                $("#quanto_poupar_ouro").val(rs.rows.item(0).valor);
+                $("#presente_ouro").val(rs.rows.item(0).presente);
+                    
+            },function(error) {
+                app.showError('Erro ao consultar meta de Ouro: ' + error.message);
+            });
+        });
+    },
+
+    metaBronze: function(){
+        var saldo;
+        var metaBronze;
+        var objetivoBronze;
+
+        db.transaction(function(tx){
+            tx.executeSql("select saldo from cadastros where id = ?",[$("#id_cadastro").val()],function(tx,rs){
+                  saldo = parseFloat(rs.rows.item(0).saldo);
+                    tx.executeSql("select valor,presente from metas where tipoMeta = ?",["Bronze"],function(tx,rs){
+                          metaBronze = parseFloat(rs.rows.item(0).valor);
+                          //app.showError("Saldo: " + saldo + " e meta Bronze: " + metaBronze + " agora faltam: " + (metaBronze - saldo) );
+                        $(".saldoCard").text("R$ " + saldo);
+                        $("#cardBronzeValor").text("R$ " + metaBronze);
+                        $("#cardBronzePresente").text(rs.rows.item(0).presente);
+                    },function(error) {
+                        app.showError('Erro ao consultar valor de Bronze: ' + error.message);
+                    });
+            },function(error) {
+                app.showError('Erro ao consultar saldo: ' + error.message);
+            });
+        });
     },
     
 };

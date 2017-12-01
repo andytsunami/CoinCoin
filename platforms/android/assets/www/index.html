@@ -180,19 +180,19 @@
                     </div>
                 </div>
                 
-                <div class="box hide" style="max-width: 290px; margin: auto; padding: 10px 0; margin-top: 30px; font-size: 16px;">
+                <div class="box hide" id="boxBronze" style="max-width: 290px; margin: auto; padding: 10px 0; margin-top: 30px; font-size: 16px;">
                     <center><table>
                         <tr>
                             <td><img src="img/moeda-bronze.png"/></td>
                             <td>
-                                <p style="margin:0; font-size: 20px;">Ir ao cinema</p>
-                                <img src="img/meta-concluida.png"/>
+                                <p style="margin:0; font-size: 20px;" class="cardBronzePresente"></p>
+                                <img src="img/meta-n-concluida.png" id="boxBronzeImagem"/>
                             </td>
                         </tr>
                     </table></center>
                 </div>
                 
-                <div class="box hide" style="max-width: 290px; margin: auto; padding: 10px 0; margin-top: 30px; font-size: 16px;">
+                <div class="box hide" id="boxPrata" style="max-width: 290px; margin: auto; padding: 10px 0; margin-top: 30px; font-size: 16px;">
                     <center><table>
                         <tr>
                             <td><img src="img/moeda-prata.png"/></td>
@@ -204,7 +204,7 @@
                     </table></center>
                 </div>
                 
-                <div class="box hide" style="max-width: 290px; margin: auto; padding: 10px 0; margin-top: 30px; font-size: 16px;">
+                <div class="box hide" id="boxOuro" style="max-width: 290px; margin: auto; padding: 10px 0; margin-top: 30px; font-size: 16px;">
                     <center><table>
                         <tr>
                             <td><img src="img/moeda-ouro.png"/></td>
@@ -263,13 +263,13 @@
                             <span style="font-size: 20px;">Metas</span>
                         </div>
                     </center>
-                    <div class="box" style="max-width: 350px; margin: auto; padding: 0 0 15px 0; margin-top: 30px;">
+                    <div class="box hide" style="max-width: 350px; margin: auto; padding: 0 0 15px 0; margin-top: 30px;" id="cardBronze">
                         <div style="background: #aa7650; border-radius: 4px 4px 0 0; font-size: 18px; color: white; text-align: center; padding: 6px;">
                             <p style="margin:0">Bronze</p>
                         </div>
                         
                         <div style=" padding: 10px 10px 0 10px">
-                            <p style="font-size:20px; margin: 0; font-weight: bold;"><span id="cardBronzePresente"></span></p>
+                            <p style="font-size:20px; margin: 0; font-weight: bold;"><span class="cardBronzePresente"></span></p>
                             <table class="meta-pai" style="width: 100%;">
                                 <tr>
                                     <td><p><img src="img/coin.png" /><span class="saldoCard"></span></p></td>
@@ -287,6 +287,57 @@
                             
                         </div>
                     </div>
+
+                    <div class="box hide" style="max-width: 350px; margin: auto; padding: 0 0 15px 0; margin-top: 30px;" id="cardPrata">
+                            <div style="background: #aa7650; border-radius: 4px 4px 0 0; font-size: 18px; color: white; text-align: center; padding: 6px;">
+                                <p style="margin:0">Bronze</p>
+                            </div>
+                            
+                            <div style=" padding: 10px 10px 0 10px">
+                                <p style="font-size:20px; margin: 0; font-weight: bold;"><span class="cardBronzePresente"></span></p>
+                                <table class="meta-pai" style="width: 100%;">
+                                    <tr>
+                                        <td><p><img src="img/coin.png" /><span class="saldoCard"></span></p></td>
+                                        <td><img src="img/seta.png" /></td>
+                                        <td><p><img src="img/coins.png" /> <span id="cardBronzeValor"></span></p></td>
+                                    </tr>
+                                </table>
+                                <div class="progress-responsavel">
+                                    <div class="progress-responsavel-container">
+                                        <div class="progress-responsavel-value" id="progress-bronze"><center class="porcentagem-progress" id="porcentagem-progress-bronze"></center></div>
+                                    </div>
+                                </div>                            
+                                <p style="font-size: 16px; font-weight: bold; text-align: center; margin: 20px 0 0 0" id="metaDiaria-bronze"></p>
+                                <center><label class="cor-btn btn-cofre" for="modal-abrircofre">Abrir o cofre</label></center>
+                                
+                            </div>
+                        </div>
+
+                        <div class="box hide" style="max-width: 350px; margin: auto; padding: 0 0 15px 0; margin-top: 30px;" id="cardOuro">
+                                <div style="background: #aa7650; border-radius: 4px 4px 0 0; font-size: 18px; color: white; text-align: center; padding: 6px;">
+                                    <p style="margin:0">Bronze</p>
+                                </div>
+                                
+                                <div style=" padding: 10px 10px 0 10px">
+                                    <p style="font-size:20px; margin: 0; font-weight: bold;"><span class="cardBronzePresente"></span></p>
+                                    <table class="meta-pai" style="width: 100%;">
+                                        <tr>
+                                            <td><p><img src="img/coin.png" /><span class="saldoCard"></span></p></td>
+                                            <td><img src="img/seta.png" /></td>
+                                            <td><p><img src="img/coins.png" /> <span id="cardBronzeValor"></span></p></td>
+                                        </tr>
+                                    </table>
+                                    <div class="progress-responsavel">
+                                        <div class="progress-responsavel-container">
+                                            <div class="progress-responsavel-value" id="progress-bronze"><center class="porcentagem-progress" id="porcentagem-progress-bronze"></center></div>
+                                        </div>
+                                    </div>                            
+                                    <p style="font-size: 16px; font-weight: bold; text-align: center; margin: 20px 0 0 0" id="metaDiaria-bronze"></p>
+                                    <center><label class="cor-btn btn-cofre" for="modal-abrircofre">Abrir o cofre</label></center>
+                                    
+                                </div>
+                            </div>
+                    
                 </div>
                         
                 

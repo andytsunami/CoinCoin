@@ -25,6 +25,7 @@ var app = {
             app.conecta();
             app.inicia();
             app.saldo();
+            app.metaBronze();
             
         });
         $('#refresh-paired-devices').click(app.listPairedDevices);
@@ -195,6 +196,7 @@ var app = {
               }, function() {
                 $("#saldo").text("R$ " + saldo);
                 $('#porcoGif').attr("src",$('#porcoGif').attr("src"));
+                app.metaBronze();
               });
         } else {
             app.saldo();
@@ -388,7 +390,8 @@ var app = {
         var tipoMeta = "Bronze";
 
         app.cadastrarMeta(dias,quantidade,recompensa,tipoMeta);
-
+        $("#boxBronze").removeClass("hide");
+        app.metaBronze();
 
     },
 
@@ -399,8 +402,8 @@ var app = {
         var tipoMeta = "Prata";
 
         app.cadastrarMeta(dias,quantidade,recompensa,tipoMeta);
-
-
+        $("#boxPrata").removeClass("hide");
+        app.metaPrata();
     },
 
     cadastrarOuro: function(){
@@ -410,7 +413,8 @@ var app = {
         var tipoMeta = "Ouro";
 
         app.cadastrarMeta(dias,quantidade,recompensa,tipoMeta);
-
+        $("#boxOuro").removeClass("hide");
+        app.metaOuro();
 
     },
 
@@ -491,9 +495,18 @@ var app = {
                           //app.showError("Saldo: " + saldo + " e meta Bronze: " + metaBronze + " agora faltam: " + (metaBronze - saldo) );
                         $(".saldoCard").text("R$ " + saldo);
                         $("#cardBronzeValor").text("R$ " + metaBronze);
-                        $("#cardBronzePresente").text(rs.rows.item(0).presente);
+                        $(".cardBronzePresente").text(rs.rows.item(0).presente);
+                        
+                        $("#boxBronze,#cardBronze").removeClass("hide").fadeIn();
                         
                         var porcentagem = app.calculaPorcentagem(saldo,metaBronze);
+
+                        if(porcentagem >= 100){
+                            //alert("Bateu a meta!");
+                            $("#boxBronzeImagem").attr("src","img/meta-concluida.png")
+                            $("#cardBronze").addClass("hide").fadeOut();
+                        }
+
                         $("#progress-bronze").css("width",porcentagem+"%");
                         $("#porcentagem-progress-bronze").text(porcentagem+"%");
 
@@ -502,14 +515,9 @@ var app = {
                         
 
                         var quantidadeDias = app.dayDiff(dataBD,dataTermino);
-                        
-
                          
                         $("#metaDiaria-bronze").text("Meta diária: R$ " + parseFloat(((metaBronze-saldo)/quantidadeDias).toFixed(2)));
                         
-
-                        
-
 
                     },function(error) {
                         app.showError('Erro ao consultar valor de Bronze: ' + error.message);

@@ -26,6 +26,8 @@ var app = {
             app.inicia();
             app.saldo();
             app.metaBronze();
+            app.metaPrata();
+            app.metaOuro();
             
         });
         $('#refresh-paired-devices').click(app.listPairedDevices);
@@ -56,6 +58,8 @@ var app = {
 
         $("#dicass").click(function(){
             app.metaBronze();
+            app.metaPrata();
+            app.metaOuro();
         });
 
     },
@@ -197,6 +201,8 @@ var app = {
                 $("#saldo").text("R$ " + saldo);
                 $('#porcoGif').attr("src",$('#porcoGif').attr("src"));
                 app.metaBronze();
+                app.metaPrata();
+                app.metaOuro();
               });
         } else {
             app.saldo();
@@ -498,15 +504,15 @@ var app = {
                         $(".cardBronzePresente").text(rs.rows.item(0).presente);
                         
                         $("#boxBronze,#cardBronze").removeClass("hide").fadeIn();
+                        $("#cardPrata,#boxPrata").addClass("hide");
                         
                         var porcentagem = app.calculaPorcentagem(saldo,metaBronze);
 
                         if(porcentagem >= 100){
-                            //alert("Bateu a meta!");
                             $("#boxBronzeImagem").attr("src","img/meta-concluida.png")
                             $("#cardBronze").addClass("hide").fadeOut();
-                            $("#cardPrata").removeClass("hide").fadeIn();
-                        }
+                            $("#cardPrata,#boxPrata").removeClass("hide").fadeIn();
+                        } 
 
                         $("#progress-bronze").css("width",porcentagem+"%");
                         $("#porcentagem-progress-bronze").text(porcentagem+"%");
@@ -522,6 +528,93 @@ var app = {
 
                     },function(error) {
                         app.showError('Erro ao consultar valor de Bronze: ' + error.message);
+                    });
+            },function(error) {
+                app.showError('Erro ao consultar saldo: ' + error.message);
+            });
+        });
+    },
+    metaPrata: function(){
+        var saldo;
+        var metaPrata;
+        var objetivoPrata;
+
+        db.transaction(function(tx){
+            tx.executeSql("select saldo from cadastros where id = ?",[$("#id_cadastro").val()],function(tx,rs){
+                  saldo = parseFloat(rs.rows.item(0).saldo);
+                    tx.executeSql("select valor,presente,dataCriacao,dias from metas where tipoMeta = ?",["Prata"],function(tx,rs){
+                          metaPrata = parseFloat(rs.rows.item(0).valor);
+                          //app.showError("Saldo: " + saldo + " e meta Prata: " + metaPrata + " agora faltam: " + (metaPrata - saldo) );
+                        $(".saldoCard").text("R$ " + saldo);
+                        $("#cardPrataValor").text("R$ " + metaPrata);
+                        $(".cardPrataPresente").text(rs.rows.item(0).presente);
+                        
+                        var porcentagem = app.calculaPorcentagem(saldo,metaPrata);
+
+                        if(porcentagem >= 100){
+                            //alert("Bateu a meta!");
+                            $("#boxPrataImagem").attr("src","img/meta-concluida.png")
+                            $("#cardPrata").addClass("hide").fadeOut();
+                            $("#cardOuro,#boxOuro").removeClass("hide").fadeIn();
+                        }
+
+                        $("#progress-prata").css("width",porcentagem+"%");
+                        $("#porcentagem-progress-prata").text(porcentagem+"%");
+
+                        var dataBD = new Date(rs.rows.item(0).dataCriacao);
+                        var dataTermino = app.somaDias(dataBD,rs.rows.item(0).dias);
+                        
+
+                        var quantidadeDias = app.dayDiff(dataBD,dataTermino);
+                         
+                        $("#metaDiaria-Prata").text("Meta diária: R$ " + parseFloat(((metaPrata-saldo)/quantidadeDias).toFixed(2)));
+                        
+
+                    },function(error) {
+                        app.showError('Erro ao consultar valor de Prata: ' + error.message);
+                    });
+            },function(error) {
+                app.showError('Erro ao consultar saldo: ' + error.message);
+            });
+        });
+    },
+    metaOuro: function(){
+        var saldo;
+        var metaOuro;
+        var objetivoOuro;
+
+        db.transaction(function(tx){
+            tx.executeSql("select saldo from cadastros where id = ?",[$("#id_cadastro").val()],function(tx,rs){
+                  saldo = parseFloat(rs.rows.item(0).saldo);
+                    tx.executeSql("select valor,presente,dataCriacao,dias from metas where tipoMeta = ?",["Ouro"],function(tx,rs){
+                          metaOuro = parseFloat(rs.rows.item(0).valor);
+                          //app.showError("Saldo: " + saldo + " e meta Ouro: " + metaOuro + " agora faltam: " + (metaOuro - saldo) );
+                        $(".saldoCard").text("R$ " + saldo);
+                        $("#cardOuroValor").text("R$ " + metaOuro);
+                        $(".cardOuroPresente").text(rs.rows.item(0).presente);
+                        
+                        var porcentagem = app.calculaPorcentagem(saldo,metaOuro);
+
+                        if(porcentagem >= 100){
+                            //alert("Bateu a meta!");
+                            $("#boxOuroImagem").attr("src","img/meta-concluida.png")
+                            $("#boxOuro").removeClass("hide").fadeIn();
+                        }
+
+                        $("#progress-ouro").css("width",porcentagem+"%");
+                        $("#porcentagem-progress-ouro").text(porcentagem+"%");
+
+                        var dataBD = new Date(rs.rows.item(0).dataCriacao);
+                        var dataTermino = app.somaDias(dataBD,rs.rows.item(0).dias);
+                        
+
+                        var quantidadeDias = app.dayDiff(dataBD,dataTermino);
+                         
+                        $("#metaDiaria-ouro").text("Meta diária: R$ " + parseFloat(((metaOuro-saldo)/quantidadeDias).toFixed(2)));
+                        
+
+                    },function(error) {
+                        app.showError('Erro ao consultar valor de Ouro: ' + error.message);
                     });
             },function(error) {
                 app.showError('Erro ao consultar saldo: ' + error.message);

@@ -197,8 +197,8 @@
                         <tr>
                             <td><img src="img/moeda-prata.png"/></td>
                             <td>
-                                <p style="margin:0; font-size: 20px;">Ir ao cinema</p>
-                                <img src="img/meta-n-concluida.png"/>
+                                <p style="margin:0; font-size: 20px;" class="cardPrataPresente"></p>
+                                <img src="img/meta-n-concluida.png" id="boxPrataImagem"/>
                             </td>
                         </tr>
                     </table></center>
@@ -209,8 +209,8 @@
                         <tr>
                             <td><img src="img/moeda-ouro.png"/></td>
                             <td>
-                                <p style="margin:0; font-size: 20px;">Ir ao cinema</p>
-                                <img src="img/meta-n-concluida.png"/>
+                                <p style="margin:0; font-size: 20px;" class="cardOuroPresente"></p>
+                                <img src="img/meta-n-concluida.png" id="boxOuroImagem"/>
                             </td>
                         </tr>
                     </table></center>
@@ -289,54 +289,54 @@
                     </div>
 
                     <div class="box hide" style="max-width: 350px; margin: auto; padding: 0 0 15px 0; margin-top: 30px;" id="cardPrata">
-                            <div style="background: #aa7650; border-radius: 4px 4px 0 0; font-size: 18px; color: white; text-align: center; padding: 6px;">
-                                <p style="margin:0">Bronze</p>
+                            <div style="background: #828282; border-radius: 4px 4px 0 0; font-size: 18px; color: white; text-align: center; padding: 6px;">
+                                <p style="margin:0">Prata</p>
                             </div>
                             
                             <div style=" padding: 10px 10px 0 10px">
-                                <p style="font-size:20px; margin: 0; font-weight: bold;"><span class="cardBronzePresente"></span></p>
+                                <p style="font-size:20px; margin: 0; font-weight: bold;"><span class="cardPrataPresente"></span></p>
                                 <table class="meta-pai" style="width: 100%;">
                                     <tr>
                                         <td><p><img src="img/coin.png" /><span class="saldoCard"></span></p></td>
                                         <td><img src="img/seta.png" /></td>
-                                        <td><p><img src="img/coins.png" /> <span id="cardBronzeValor"></span></p></td>
+                                        <td><p><img src="img/coins.png" /> <span id="cardPrataValor"></span></p></td>
                                     </tr>
                                 </table>
                                 <div class="progress-responsavel">
                                     <div class="progress-responsavel-container">
-                                        <div class="progress-responsavel-value" id="progress-bronze"><center class="porcentagem-progress" id="porcentagem-progress-bronze"></center></div>
+                                        <div class="progress-responsavel-value" id="progress-prata"><center class="porcentagem-progress" id="porcentagem-progress-prata"></center></div>
                                     </div>
                                 </div>                            
-                                <p style="font-size: 16px; font-weight: bold; text-align: center; margin: 20px 0 0 0" id="metaDiaria-bronze"></p>
+                                <p style="font-size: 16px; font-weight: bold; text-align: center; margin: 20px 0 0 0" id="metaDiaria-Prata"></p>
                                 <center><label class="cor-btn btn-cofre" for="modal-abrircofre">Abrir o cofre</label></center>
                                 
                             </div>
                         </div>
 
                         <div class="box hide" style="max-width: 350px; margin: auto; padding: 0 0 15px 0; margin-top: 30px;" id="cardOuro">
-                                <div style="background: #aa7650; border-radius: 4px 4px 0 0; font-size: 18px; color: white; text-align: center; padding: 6px;">
-                                    <p style="margin:0">Bronze</p>
+                                <div style="background: #d6a333; border-radius: 4px 4px 0 0; font-size: 18px; color: white; text-align: center; padding: 6px;">
+                                    <p style="margin:0">Ouro</p>
                                 </div>
                                 
                                 <div style=" padding: 10px 10px 0 10px">
-                                    <p style="font-size:20px; margin: 0; font-weight: bold;"><span class="cardBronzePresente"></span></p>
+                                    <p style="font-size:20px; margin: 0; font-weight: bold;"><span class="cardOuroPresente"></span></p>
                                     <table class="meta-pai" style="width: 100%;">
                                         <tr>
                                             <td><p><img src="img/coin.png" /><span class="saldoCard"></span></p></td>
                                             <td><img src="img/seta.png" /></td>
-                                            <td><p><img src="img/coins.png" /> <span id="cardBronzeValor"></span></p></td>
+                                            <td><p><img src="img/coins.png" /> <span id="cardOuroValor"></span></p></td>
                                         </tr>
                                     </table>
                                     <div class="progress-responsavel">
                                         <div class="progress-responsavel-container">
-                                            <div class="progress-responsavel-value" id="progress-bronze"><center class="porcentagem-progress" id="porcentagem-progress-bronze"></center></div>
+                                            <div class="progress-responsavel-value" id="progress-ouro"><center class="porcentagem-progress" id="porcentagem-progress-ouro"></center></div>
                                         </div>
                                     </div>                            
-                                    <p style="font-size: 16px; font-weight: bold; text-align: center; margin: 20px 0 0 0" id="metaDiaria-bronze"></p>
+                                    <p style="font-size: 16px; font-weight: bold; text-align: center; margin: 20px 0 0 0" id="metaDiaria-ouro"></p>
                                     <center><label class="cor-btn btn-cofre" for="modal-abrircofre">Abrir o cofre</label></center>
                                     
                                 </div>
-                            </div>
+                        </div>
                     
                 </div>
                         

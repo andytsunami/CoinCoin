@@ -303,7 +303,7 @@ var app = {
 
           //Tabela de metas
           db.transaction(function(tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS metas (dias, valor, presente, tipoMeta)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS metas (dias, valor, presente, tipoMeta,dataCriacao)');
               }, function(error) {
                 app.showError('Transaction ERROR: ' + error.message);
               }, function() {
@@ -417,8 +417,9 @@ var app = {
     cadastrarMeta: function(dias,quantidade,recompensa,tipoMeta){
         db.transaction(function(tx){
             tx.executeSql("DELETE FROM metas WHERE tipoMeta = ?",[tipoMeta], function(){
-            
-                tx.executeSql("INSERT INTO metas VALUES (?,?,?,?)",[dias,quantidade,recompensa,tipoMeta], function(tx,rs){
+                var agora = new Date();
+                //alert(agora.getTime());
+                tx.executeSql("INSERT INTO metas VALUES (?,?,?,?,?)",[dias,quantidade,recompensa,tipoMeta,agora.getTime()], function(tx,rs){
                     app.vaPara("paraCadastroMeta");
                 },function(error) {
                     app.showError('Erro ao inserir nova meta: ' + error.message);
@@ -485,12 +486,31 @@ var app = {
         db.transaction(function(tx){
             tx.executeSql("select saldo from cadastros where id = ?",[$("#id_cadastro").val()],function(tx,rs){
                   saldo = parseFloat(rs.rows.item(0).saldo);
-                    tx.executeSql("select valor,presente from metas where tipoMeta = ?",["Bronze"],function(tx,rs){
+                    tx.executeSql("select valor,presente,dataCriacao,dias from metas where tipoMeta = ?",["Bronze"],function(tx,rs){
                           metaBronze = parseFloat(rs.rows.item(0).valor);
                           //app.showError("Saldo: " + saldo + " e meta Bronze: " + metaBronze + " agora faltam: " + (metaBronze - saldo) );
                         $(".saldoCard").text("R$ " + saldo);
                         $("#cardBronzeValor").text("R$ " + metaBronze);
                         $("#cardBronzePresente").text(rs.rows.item(0).presente);
+                        
+                        var porcentagem = app.calculaPorcentagem(saldo,metaBronze);
+                        $("#progress-bronze").css("width",porcentagem+"%");
+                        $("#porcentagem-progress-bronze").text(porcentagem+"%");
+
+                        var dataBD = new Date(rs.rows.item(0).dataCriacao);
+                        var dataTermino = app.somaDias(dataBD,rs.rows.item(0).dias);
+                        
+
+                        var quantidadeDias = app.dayDiff(dataBD,dataTermino);
+                        
+
+                         
+                        $("#metaDiaria-bronze").text("Meta diária: R$ " + parseFloat(((metaBronze-saldo)/quantidadeDias).toFixed(2)));
+                        
+
+                        
+
+
                     },function(error) {
                         app.showError('Erro ao consultar valor de Bronze: ' + error.message);
                     });
@@ -499,6 +519,19 @@ var app = {
             });
         });
     },
+    calculaPorcentagem: function(saldo,meta){
+        return (parseInt(saldo * 100/meta));
+    },
+
+    somaDias: function(data,dias){
+        var resultado = new Date(data);
+        resultado.setDate(resultado.getDate() + parseInt(dias));
+        return resultado;
+    },
+
+    dayDiff(inicio,fim){
+        return Math.round((fim-inicio)/(1000*60*60*24));
+    }
     
 };
 

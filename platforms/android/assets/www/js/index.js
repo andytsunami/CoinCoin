@@ -28,6 +28,7 @@ var app = {
             app.metaBronze();
             app.metaPrata();
             app.metaOuro();
+            app.atualizaBarra();
             
         });
         $('#refresh-paired-devices').click(app.listPairedDevices);
@@ -203,6 +204,7 @@ var app = {
                 app.metaBronze();
                 app.metaPrata();
                 app.metaOuro();
+                app.atualizaBarra();
               });
         } else {
             app.saldo();
@@ -398,6 +400,7 @@ var app = {
         app.cadastrarMeta(dias,quantidade,recompensa,tipoMeta);
         $("#boxBronze").removeClass("hide");
         app.metaBronze();
+        app.atualizaBarra();
 
     },
 
@@ -410,6 +413,7 @@ var app = {
         app.cadastrarMeta(dias,quantidade,recompensa,tipoMeta);
         $("#boxPrata").removeClass("hide");
         app.metaPrata();
+        app.atualizaBarra();
     },
 
     cadastrarOuro: function(){
@@ -421,6 +425,7 @@ var app = {
         app.cadastrarMeta(dias,quantidade,recompensa,tipoMeta);
         $("#boxOuro").removeClass("hide");
         app.metaOuro();
+        app.atualizaBarra();
 
     },
 
@@ -504,7 +509,7 @@ var app = {
                         $(".cardBronzePresente").text(rs.rows.item(0).presente);
                         
                         $("#boxBronze,#cardBronze").removeClass("hide").fadeIn();
-                        $("#cardPrata,#boxPrata").addClass("hide");
+                        $("#cardPrata,#boxPrata,#cardPrata,#boxOuro").addClass("hide");
                         
                         var porcentagem = app.calculaPorcentagem(saldo,metaBronze);
 
@@ -633,8 +638,62 @@ var app = {
 
     dayDiff(inicio,fim){
         return Math.round((fim-inicio)/(1000*60*60*24));
+    },
+
+    getMaiorMeta: function(){
+        db.transaction(function(tx){
+            tx.executeSql("SELECT max(valor) valor FROM metas",[], function(tx,rs){
+                return parseFloat(rs.rows.item(0).valor);
+            },function(error) {
+                app.showError('Erro ao descobrir maior meta : ' + error.message);
+            });
+        });
+    },
+
+    atualizaBarra: function(){
+        var metaOuro;
+        var metaPinBronze,metaPinPrata,metaPinOuro,saldoPin = 0;
+
+        db.transaction(function(tx){
+            tx.executeSql("SELECT valor FROM metas WHERE tipoMeta = ?",["Ouro"], function(tx,rs){
+                metaOuro = parseFloat(rs.rows.item(0).valor);
+                $(".pinOuro").css("width", "5%");
+    
+                tx.executeSql("SELECT valor FROM metas WHERE tipoMeta = ?",["Bronze"], function(tx,rs){
+                    metaPinBronze = parseFloat(rs.rows.item(0).valor);
+                    metaPinBronze = parseInt(105) - app.calculaPorcentagem(metaPinBronze,metaOuro);
+                    $(".pinBronze").css("width",metaPinBronze + "%");
+               },function(error) {
+                   app.showError('Erro ao ajustar meta bronze : ' + error.message);
+               });
+    
+               tx.executeSql("SELECT valor FROM metas WHERE tipoMeta = ?",["Prata"], function(tx,rs){
+                   metaPinPrata = parseFloat(rs.rows.item(0).valor);
+                   metaPinPrata = parseInt(105) - app.calculaPorcentagem(metaPinPrata,metaOuro);
+                   $(".pinPrata").css("width",metaPinPrata + "%");
+              },function(error) {
+                  app.showError('Erro ao ajustar meta Prata : ' + error.message);
+              }); 
+              
+              tx.executeSql("SELECT saldo FROM cadastros",[], function(tx,rs){
+                    saldoPin = parseFloat(rs.rows.item(0).saldo);
+                    saldoPin = app.calculaPorcentagem(saldoPin,metaOuro);
+
+                    $(".barra-alcancada").attr("data-percent",saldoPin + "%");
+                    $(".count-bar").css("width",saldoPin + "%");
+
+                },function(error) {
+                    app.showError('Erro ao ajustar porcentagem do saldo : ' + error.message);
+                });
+    
+           },function(error) {
+               app.showError('Erro ao ajustar meta Ouro : ' + error.message);
+           });
+        });
     }
     
 };
 
 app.initialize();
+
+//dias, valor, presente, tipoMeta,dataCriacao

@@ -500,26 +500,26 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c44681', end
 border-radius: 100px;
 }
 
-.meta-alcancada .count1{
+.meta-alcancada .pinBronze {
 	position: absolute;
     line-height: 25px;
-    width: 75%;
+    width: 100%;
     top: -30px;
     right: 0;
 }
 
-.meta-alcancada .count2{
+.meta-alcancada .pinPrata {
 	position: absolute;
     line-height: 25px;
-    width: 40%;
+    width: 100%;
     top: -30px;
     right: 0;
 }
 
-.meta-alcancada .count3{
+.meta-alcancada .pinOuro {
 	position: absolute;
     line-height: 25px;
-    width: 10%;
+    width: 100%;
     top: -30px;
     right: 0;
 }

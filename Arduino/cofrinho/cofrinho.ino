@@ -78,7 +78,13 @@ void loop() {
     } else if (command == "l") {
        MinhaSerial.println("saldo está zerado e cofre pode ser aberto");
        saldo = 0.0;
-    } else {
+       abre();
+    } else if(command == "f") {
+       MinhaSerial.println("Fecha o cofre");
+       saldo = 0.0;
+       fecha();
+     }
+    else {
       Serial.println("Nao entendi...");
       MinhaSerial.println("Naao entendi o comando");
       }
@@ -169,11 +175,9 @@ void piscaValor(String valor){
     }
   }
 
-void iniciaMotor(){
+void iniciaMotor(int posicao){
   s.attach(SERVO);
-  Serial.begin(115200);
-  
-  s.write(0); // Inicia motor posição zero
+  s.write(posicao); // Inicia motor posição zero
 }
 
 void testaMotor(){
@@ -183,19 +187,24 @@ void testaMotor(){
 }
 
 void abre(){
+    iniciaMotor(90);
     Serial.println("Abrindo...");
-    for(pos = 0; pos < 90; pos++) {
-      s.write(pos);
-      delay(15);
-    }
-  }
-
-  void fecha(){
-    Serial.println("Fechando...");
     for(pos = 90; pos >= 0; pos--){
       s.write(pos);
       delay(15);
     }
+     s.detach();
+  }
+
+  void fecha(){
+    iniciaMotor(0);
+    Serial.println("Fechando...");
+    for(pos = 0; pos < 90; pos++) {
+      s.write(pos);
+      delay(15);
+    }
+    s.detach();
+
   }
 
   void animaPorquinho(){

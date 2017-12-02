@@ -40,6 +40,10 @@ var app = {
         $("#zerar").click(app.zerar);
         $("#cadastrar").click(app.cadastrar);
         $("#validaSenha").click(app.verificaSenha);
+        $("#confirmaAbrir").click(function(){
+            $(".btn-nao").click();
+            app.abrirCofre();
+        });
 
         $('#terminal .go-back').click(function () {
             app.goTo('paired-devices');
@@ -319,10 +323,6 @@ var app = {
               }, function() {
                     
               });
-    
-
-
-
     },
 
     listaUsuario: function(){
@@ -354,7 +354,7 @@ var app = {
           }, function(error) {
             app.showError('Erro ao cadastrar: ' + error.message);
           }, function() {
-            app.showError('Cadastro realizado com sucesso!');
+           // app.showError('Cadastro realizado com sucesso!');
           });
        
           app.atualizarForms();
@@ -401,6 +401,7 @@ var app = {
         $("#boxBronze").removeClass("hide");
         app.metaBronze();
         app.atualizaBarra();
+        app.saldo();
 
     },
 
@@ -414,6 +415,7 @@ var app = {
         $("#boxPrata").removeClass("hide");
         app.metaPrata();
         app.atualizaBarra();
+        app.saldo();
     },
 
     cadastrarOuro: function(){
@@ -426,11 +428,22 @@ var app = {
         $("#boxOuro").removeClass("hide");
         app.metaOuro();
         app.atualizaBarra();
+        app.saldo();
 
     },
 
     cadastrarMeta: function(dias,quantidade,recompensa,tipoMeta){
         db.transaction(function(tx){
+            tx.executeSql("SELECT COUNT(*) as qtd FROM metas",[], function(tx,rs){
+                $("#qtdMetas").text(rs.rows.item(0).qtd);
+                alert("Qtd metas " + rs.rows.item(0).qtd);
+                if(rs.rows.item(0).qtd < 1 || rs.rows.item(0).qtd  == undefined){
+                    app.fechaCofre();
+                }
+            },function(error) {
+                app.showError('Erro ao ajustar porcentagem do saldo : ' + error.message);
+            });
+            
             tx.executeSql("DELETE FROM metas WHERE tipoMeta = ?",[tipoMeta], function(){
                 var agora = new Date();
                 //alert(agora.getTime());
@@ -529,7 +542,6 @@ var app = {
                         var quantidadeDias = app.dayDiff(dataBD,dataTermino);
                          
                         $("#metaDiaria-bronze").text("Meta diária: R$ " + parseFloat(((metaBronze-saldo)/quantidadeDias).toFixed(2)));
-                        
 
                     },function(error) {
                         app.showError('Erro ao consultar valor de Bronze: ' + error.message);
@@ -684,21 +696,39 @@ var app = {
 
                 },function(error) {
                     app.showError('Erro ao ajustar porcentagem do saldo : ' + error.message);
-                });
-
-                tx.executeSql("SELECT COUNT(*) as qtd FROM metas",[], function(tx,rs){
-                    $("#qtdMetas").text(rs.rows.item(0).qtd);
-
-                },function(error) {
-                    app.showError('Erro ao ajustar porcentagem do saldo : ' + error.message);
-                });
-
-               
+                });           
     
            },function(error) {
                app.showError('Erro ao ajustar meta Ouro : ' + error.message);
            });
         });
+    },
+
+    abrirCofre: function(){
+        var data = 'l';
+        db.transaction(function(tx){
+            tx.executeSql("DELETE FROM metas",[], function(){
+                var agora = new Date();
+                //alert(agora.getTime());
+                tx.executeSql("UPDATE cadastros SET saldo = ?",["0,00"], function(tx,rs){
+                    app.limparCampoMetas();
+                },function(error) {
+                    app.showError('Erro ao zerar saldo: ' + error.message);
+                });            
+            },function(error) {
+                app.showError('Erro ao limpar metas: ' + error.message);
+            });
+        });
+        bluetoothSerial.write(data, null, app.showError);
+    },
+
+    fechaCofre: function(){
+        var data = 'f';
+        bluetoothSerial.write(data, null, app.showError);
+    },
+
+    limparCampoMetas: function(){
+        $(".inputMeta").val("");
     }
     
 };

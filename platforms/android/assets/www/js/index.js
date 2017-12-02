@@ -685,6 +685,15 @@ var app = {
                 },function(error) {
                     app.showError('Erro ao ajustar porcentagem do saldo : ' + error.message);
                 });
+
+                tx.executeSql("SELECT COUNT(*) as qtd FROM metas",[], function(tx,rs){
+                    $("#qtdMetas").text(rs.rows.item(0).qtd);
+
+                },function(error) {
+                    app.showError('Erro ao ajustar porcentagem do saldo : ' + error.message);
+                });
+
+               
     
            },function(error) {
                app.showError('Erro ao ajustar meta Ouro : ' + error.message);

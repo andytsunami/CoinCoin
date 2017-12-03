@@ -209,6 +209,7 @@ var app = {
                 app.metaPrata();
                 app.metaOuro();
                 app.atualizaBarra();
+                app.atualizarMetas();
               });
         } else {
             app.saldo();
@@ -446,11 +447,7 @@ var app = {
                 var agora = new Date();
                 //alert(agora.getTime());
                 tx.executeSql("INSERT INTO metas VALUES (?,?,?,?,?)",[dias,quantidade,recompensa,tipoMeta,agora.getTime()], function(tx,rs){
-                    tx.executeSql("SELECT COUNT(*) as qtd FROM metas",[], function(tx,rs){
-                        $(".qtdMetas").text(rs.rows.item(0).qtd);
-                    },function(error) {
-                        app.showError('Erro ao ajustar porcentagem do saldo : ' + error.message);
-                    });
+                    app.atualizarMetas();
                     app.vaPara("paraCadastroMeta");
                 },function(error) {
                     app.showError('Erro ao inserir nova meta: ' + error.message);
@@ -505,6 +502,12 @@ var app = {
                     
             },function(error) {
                 app.showError('Erro ao consultar meta de Ouro: ' + error.message);
+            });
+
+            tx.executeSql("SELECT COUNT(*) as qtd FROM metas",[], function(tx,rs){
+                $(".qtdMetas").text(rs.rows.item(0).qtd);
+            },function(error) {
+                app.showError('Erro ao ajustar porcentagem do saldo : ' + error.message);
             });
         });
     },
@@ -714,7 +717,8 @@ var app = {
                 var agora = new Date();
                 //alert(agora.getTime());
                 tx.executeSql("UPDATE cadastros SET saldo = ?",["0,00"], function(tx,rs){
-                    $("#boxBronze,#cardBronze,#cardPrata,#boxPrata,#cardPrata,#boxOuro").addClass("hide");
+                    $("#boxBronze,#cardBronze,#cardPrata,#boxPrata,#cardOuro,#boxOuro").addClass("hide");
+                    app.atualizarMetas();
                     app.limparCampoMetas();
                 },function(error) {
                     app.showError('Erro ao zerar saldo: ' + error.message);

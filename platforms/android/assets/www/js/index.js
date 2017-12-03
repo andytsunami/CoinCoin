@@ -436,18 +436,22 @@ var app = {
         db.transaction(function(tx){
             tx.executeSql("SELECT COUNT(*) as qtd FROM metas",[], function(tx,rs){
                 $("#qtdMetas").text(rs.rows.item(0).qtd);
-                alert("Qtd metas " + rs.rows.item(0).qtd);
                 if(rs.rows.item(0).qtd < 1 || rs.rows.item(0).qtd  == undefined){
                     app.fechaCofre();
                 }
             },function(error) {
                 app.showError('Erro ao ajustar porcentagem do saldo : ' + error.message);
             });
-            
+
             tx.executeSql("DELETE FROM metas WHERE tipoMeta = ?",[tipoMeta], function(){
                 var agora = new Date();
                 //alert(agora.getTime());
                 tx.executeSql("INSERT INTO metas VALUES (?,?,?,?,?)",[dias,quantidade,recompensa,tipoMeta,agora.getTime()], function(tx,rs){
+                    tx.executeSql("SELECT COUNT(*) as qtd FROM metas",[], function(tx,rs){
+                        $("#qtdMetas").text(rs.rows.item(0).qtd);
+                    },function(error) {
+                        app.showError('Erro ao ajustar porcentagem do saldo : ' + error.message);
+                    });
                     app.vaPara("paraCadastroMeta");
                 },function(error) {
                     app.showError('Erro ao inserir nova meta: ' + error.message);

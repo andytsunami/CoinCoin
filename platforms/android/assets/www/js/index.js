@@ -717,7 +717,8 @@ var app = {
                 var agora = new Date();
                 //alert(agora.getTime());
                 tx.executeSql("UPDATE cadastros SET saldo = ?",["0,00"], function(tx,rs){
-                    $("#boxBronze,#cardBronze,#cardPrata,#boxPrata,#cardPrata,#boxOuro").addClass("hide");
+                    $("#boxBronze,#cardBronze,#cardPrata,#boxPrata,#cardOuro,#boxOuro").addClass("hide");
+                    app.atualizarMetas();
                     app.limparCampoMetas();
                 },function(error) {
                     app.showError('Erro ao zerar saldo: ' + error.message);

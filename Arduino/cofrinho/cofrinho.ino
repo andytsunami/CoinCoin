@@ -41,6 +41,8 @@ void setup() {
   Serial.println("Digite os comandos AT :");
   //Inicia a serial configurada nas portas 6 e 7
   MinhaSerial.begin(9600);
+
+  //abre();
   
   //Portas do sensor
   pinMode(BRANCO, INPUT_PULLUP);
@@ -79,7 +81,7 @@ void loop() {
        MinhaSerial.println("saldo está zerado e cofre pode ser aberto");
        saldo = 0.0;
        abre();
-    } else if(command == "f") {
+    } else if(command == "f" || command == "sf") {
        MinhaSerial.println("Fecha o cofre");
        saldo = 0.0;
        fecha();

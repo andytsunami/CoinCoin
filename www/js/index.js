@@ -435,7 +435,6 @@ var app = {
     cadastrarMeta: function(dias,quantidade,recompensa,tipoMeta){
         db.transaction(function(tx){
             tx.executeSql("SELECT COUNT(*) as qtd FROM metas",[], function(tx,rs){
-                $("#qtdMetas").text(rs.rows.item(0).qtd);
                 if(rs.rows.item(0).qtd < 1 || rs.rows.item(0).qtd  == undefined){
                     app.fechaCofre();
                 }
@@ -448,7 +447,7 @@ var app = {
                 //alert(agora.getTime());
                 tx.executeSql("INSERT INTO metas VALUES (?,?,?,?,?)",[dias,quantidade,recompensa,tipoMeta,agora.getTime()], function(tx,rs){
                     tx.executeSql("SELECT COUNT(*) as qtd FROM metas",[], function(tx,rs){
-                        $("#qtdMetas").text(rs.rows.item(0).qtd);
+                        $(".qtdMetas").text(rs.rows.item(0).qtd);
                     },function(error) {
                         app.showError('Erro ao ajustar porcentagem do saldo : ' + error.message);
                     });
